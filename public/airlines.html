@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style/main.css" />
+    <title>FAA Database</title>
+</head>
+<body>
+    <header>
+        <h1>FAA Database</h1>
+    </header>
+    <nav class="mainnav">
+        <div class="">
+            <ul>
+                <li>
+                    <a title="Home page" href="./index.html">Home</a>
+                </li>
+                <li>
+                    <a title="Airlines page" href="./airlines.html">Airlines</a>
+                </li>
+                <li>
+                    <a title="Airports page" href="./airports.html">Airports</a>
+                </li>
+                <li>
+                    <a title="Flights page" href="./flights.html">Flights</a>
+                </li>
+                <li>
+                    <a title="Planes page" href="./planes.html">Planes</a>
+                </li>
+                <li>
+                    <a title="Airlines-Airports page" href="./airlines_airports.html">Airlines-Airports</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <h2>
+        Airlines
+    </h2>
+    <table class="main-table" id="airlines-table">
+        <thead>
+            <tr>
+                <th>Airline ID</th>
+                <th>Airline Name</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>AAL</td>
+                <td>American Airlines</td>
+                <td>
+                    <button>Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>DAL</td>
+                <td>Delta Airlines</td>
+                <td>
+                    <button>Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>...</td>
+                <td>...</td>
+                <td>
+                    <button>Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="form-div">
+        <h3>
+            Create Airline
+        </h3>
+        <form id="add-airline-form">
+            <table class="form-table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <label for="input-airline-id">Airline ID: </label>
+                        </td>
+                        <td>
+                        <input type="text" name="input-airline-id" id="input-airline-id" required> 
+                        </td>
+                        <td>*Required</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="input-airline-name">Airline Name: </label>
+                        </td>
+                        <td>
+                            <input type="text" name="input-airline-name" id="input-airline-name" required>
+                        </td>
+                        <td>*Required</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <div>
+                <button>Create</button>
+                <button>Cancel</button>
+            </div>
+        </form>
+    </div>
+    <br>
+    <div class="form-div">
+        <h3>
+            Update Airline
+        </h3>
+        <form id="update-airline-form">
+            <table class="form-table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <label for="update-airline-id">Select Airline ID: </label>
+                        </td>
+                        <td>
+                        <select type="text" name="update-airline-id" id="update-airline-id" required>
+                                <option value="airline">Select an Airline</option>
+                                <option value="AAL">AAL</option>
+                                <option value="DAL">DAL</option>
+                        </select>
+                        </td>
+                        <td>*Required</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="update-airline-name">Airline Name: </label>
+                        </td>
+                        <td>
+                            <input type="text" name="update-airline-name" id="update-airline-name" required>
+                        </td>
+                        <td>*Required</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <div>
+                <button>Update</button>
+                <button>Cancel</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
