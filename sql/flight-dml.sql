@@ -1,7 +1,7 @@
 -- TODO:
 -- Flights - READ
 
--- Colon (:) character is being used to denote variables that will have data
+-- The `:` character is being used to denote variables that will have data
 -- that is fetched via backend code
 
 --
@@ -112,4 +112,4 @@ WHERE plane_id = :plane_id_selected_from_table;
 SELECT airlines_airports.airline_airport_id
 FROM airlines_airports
 JOIN airlines ON airlines_airports.airline_id = airlines.airline_id
-JOIN airports ON airlines_airports.airports_id = airports.airport_id;
+JOIN airports ON airlines_airports.airport_id = airports.airport_id;
