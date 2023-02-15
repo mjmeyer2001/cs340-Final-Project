@@ -61,6 +61,21 @@ INSERT INTO flights VALUES
 (:plane_id, :departure_time, :arrival_time, :origin_airport_id, :destination_airport_id);
 
 -- READ: Get attributes to populate flight table
+SELECT 
+	flights.flight_id,
+    flights.plane_id,
+    planes.manufacturer,
+    airlines.name as airline_name,
+    flights.departure_time,
+    flights.arrival_time,
+    origin.name AS origin_airport_name,
+    destination.name as destination_airport_name
+FROM
+	flights
+JOIN planes ON flights.plane_id = planes.plane_id
+LEFT JOIN airlines ON planes.airline_id = airlines.airline_id
+JOIN airports AS origin ON flights.origin_airport_id = origin.airport_id
+JOIN airports AS destination ON flights.destination_airport_id = destination.airport_id;
 
 -- UPDATE: Update a flight's attributes given a flight ID
 UPDATE flights
