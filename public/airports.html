@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="./style/main.css" />
     <title>FAA Database</title>
 </head>
+
 <body>
     <header>
         <h1>FAA Database</h1>
@@ -35,118 +37,127 @@
             </ul>
         </div>
     </nav>
-    <h2>
-        Airports
-    </h2>
-    <table class="main-table" id="airports-table">
-        <thead>
-            <tr>
-                <th>Airport ID</th>
-                <th>Airport Name</th>
-                <th>Airport Location</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>DFW</td>
-                <td>Dallas Fort Worth International Airport</td>
-                <td>Dallas, TX</td>
-                <td>
-                    <button>Delete</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="form-div">
-        <h3>
-            Create Airport
-        </h3>
-        <form id="add-airport-form">
-            <table class="form-table">
-                <tbody>
-                    <tr>
-                        <td>
-                            <label for="input-airport-id">Airport ID: </label>
-                        </td>
-                        <td>
-                        <input type="text" name="input-airport-id" id="input-airport-id" required> 
-                        </td>
-                        <td>*Required</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="input-airport-name">Airport Name: </label>
-                        </td>
-                        <td>
-                            <input type="text" name="input-airport-name" id="input-airport-name" required>
-                        </td>
-                        <td>*Required</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="input-airport-location">Airport Location: </label>
-                        </td>
-                        <td>
-                            <input type="text" name="input-airport-location" id="input-airport-location" required>
-                        </td>
-                        <td>*Required</td>
-                    </tr>
-                </tbody>
-            </table>
-            <br>
-            <div>
-                <button>Create</button>
-                <button>Cancel</button>
-            </div>
-        </form>
-    </div>
-    <br>
-    <div class="form-div">
-        <h3>
-            Update Airport
-        </h3>
-        <form id="update-airport-form">
-            <table class="form-table">
-                <tbody>
-                    <tr>
-                        <td>
-                            <label for="update-airport-id">Select Airport ID: </label>
-                        </td>
-                        <td>
-                        <select type="text" name="update-airport-id" id="update-airport-id" required>
+    <div class="main-section">
+        <div class="center">
+            <h2 style="text-align: center">
+                Airports
+            </h2>
+        </div>
+        <table class="main-table center" id="airports-table">
+            <thead>
+                <tr>
+                    <th>Airport ID</th>
+                    <th>Airport Name</th>
+                    <th>Airport Location</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>DFW</td>
+                    <td>Dallas Fort Worth International Airport</td>
+                    <td>Dallas, TX</td>
+                    <td>
+                        <button>Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="form-div center">
+            <h3>
+                Create Airport
+            </h3>
+            <form id="add-airport-form">
+                <table class="form-table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label for="input-airport-id">Airport ID: </label>
+                            </td>
+                            <td>
+                                <input type="text" name="input-airport-id" id="input-airport-id" required>
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="input-airport-name">Airport Name: </label>
+                            </td>
+                            <td>
+                                <input type="text" name="input-airport-name" id="input-airport-name" required>
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="input-airport-location">Airport Location: </label>
+                            </td>
+                            <td>
+                                <input type="text" name="input-airport-location" id="input-airport-location" required>
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <div>
+                    <button>Create</button>
+                    <button>Cancel</button>
+                </div>
+            </form>
+        </div>
+        <br>
+        <div class="form-div center">
+            <h3>
+                Update Airport
+            </h3>
+            <form id="update-airport-form">
+                <table class="form-table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label for="update-airport-id">Select Airport ID: </label>
+                            </td>
+                            <td>
+                                <select type="text" name="update-airport-id" id="update-airport-id" required>
                                 <option value="airport">Select an Airport</option>
                                 <option value="DFW">DFW</option>
                         </select>
-                        </td>
-                        <td>*Required</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="update-airport-name">Airport Name: </label>
-                        </td>
-                        <td>
-                            <input type="text" name="update-airport-name" id="update-airport-name" required>
-                        </td>
-                        <td>*Required</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="update-airport-location">Airport Location: </label>
-                        </td>
-                        <td>
-                            <input type="text" name="update-airport-namlocatione" id="update-airport-location" required>
-                        </td>
-                        <td>*Required</td>
-                    </tr>
-                </tbody>
-            </table>
-            <br>
-            <div>
-                <button>Update</button>
-                <button>Cancel</button>
-            </div>
-        </form>
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="update-airport-name">Airport Name: </label>
+                            </td>
+                            <td>
+                                <input type="text" name="update-airport-name" id="update-airport-name" required>
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="update-airport-location">Airport Location: </label>
+                            </td>
+                            <td>
+                                <input type="text" name="update-airport-namlocatione" id="update-airport-location" required>
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <div>
+                    <button>Update</button>
+                    <button>Cancel</button>
+                </div>
+            </form>
+        </div>
+        <br>
     </div>
+    <footer>
+        <p>Page by Roman and Matthew ©2023</p>
+    </footer>
 </body>
+
 </html>

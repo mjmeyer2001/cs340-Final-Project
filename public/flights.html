@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="./style/main.css" />
     <title>FAA Database</title>
 </head>
+
 <body>
     <header>
         <h1>FAA Database</h1>
@@ -35,164 +37,175 @@
             </ul>
         </div>
     </nav>
-    <h2>
-        Flights
-    </h2>
-    <table class="main-table" id="flights-table">
-        <thead>
-            <tr>
-                <th>Flight ID</th>
-                <th>Plane ID</th>
-                <th>Departure Time</th>
-                <th>Arrival Time</th>
-                <th>Origin Airport</th>
-                <th>Destination Airport</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>1</td>
-                <td>2022-01-01 09:00:00</td>
-                <td>2022-01-01 11:00:00</td>
-                <td>DFW</td>
-                <td>LGA</td>
-                <td>
-                    <button>Delete</button>
-                </td>
-        </tbody>
-    </table>
-    <div class="form-div">
-        <h3>
-            Create Flight
-        </h3>
-        <form class="form-table" id="add-flight-form">
-            <table>
+    <div class="main-section">
+        <div class="center">
+            <h2 style="text-align: center">
+                Flights
+            </h2>
+        </div>
+        <div class="center">
+            <table class="main-table center" id="flights-table">
+                <thead>
+                    <tr>
+                        <th>Flight ID</th>
+                        <th>Plane ID</th>
+                        <th>Departure Time</th>
+                        <th>Arrival Time</th>
+                        <th>Origin Airport</th>
+                        <th>Destination Airport</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
                 <tbody>
                     <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>2022-01-01 09:00:00</td>
+                        <td>2022-01-01 11:00:00</td>
+                        <td>DFW</td>
+                        <td>LGA</td>
                         <td>
-                            <label for="input-plane-id">Plane ID: </label>
+                            <button>Delete</button>
                         </td>
-                        <td>
-                            <input type="number" name="input-plane-id" id="input-plane-id" required>
-                        </td>
-                        <td>*Required</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="input-departure-time">Departure Time: </label>
-                        </td>
-                        <td>
-                            <input type="datetime-local" step="1" name="input-departure-time" id="input-departure-time">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="input-arrival-time">Arrival Time: </label>
-                        </td>
-                        <td>
-                            <input type="datetime-local" step="1" name="input-arrival-time" id="input-arrival-time">
-                        </td>                    
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="input-origin-airport">Origin Airport: </label>
-                        </td>
-                        <td>
-                            <input type="text" name="input-origin-airport" id="input-origin-airport">
-                        </td>
-                        <td>*Required</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="input-destination-airport">Destination Airport: </label>
-                        </td>
-                        <td>
-                            <input type="text" name="input-destination-airport" id="input-destination-airport">
-                        </td>
-                        <td>*Required</td>
-                    </tr>
                 </tbody>
             </table>
-            <br>
-            <div>
-                <button>Create</button>
-                <button>Cancel</button>
-            </div>
-        </form>
-    </div>
-    <br>
-    <div class="form-div">
-        <h3>
-            Update Flight
-        </h3>
-        <form id="update-flight-form">
-            <table class="form-table">
-                <tbody>
-                    <tr>
-                        <td>
-                            <label for="update-flight-id">Select Flight ID: </label>
-                        </td>
-                        <td>
-                        <select type="text" name="update-flight-id" id="update-flight-id" required>
+        </div>
+        <div class="form-div center">
+            <h3>
+                Create Flight
+            </h3>
+            <form class="form-table" id="add-flight-form">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label for="input-plane-id">Plane ID: </label>
+                            </td>
+                            <td>
+                                <input type="number" name="input-plane-id" id="input-plane-id" required>
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="input-departure-time">Departure Time: </label>
+                            </td>
+                            <td>
+                                <input type="datetime-local" step="1" name="input-departure-time" id="input-departure-time">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="input-arrival-time">Arrival Time: </label>
+                            </td>
+                            <td>
+                                <input type="datetime-local" step="1" name="input-arrival-time" id="input-arrival-time">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="input-origin-airport">Origin Airport: </label>
+                            </td>
+                            <td>
+                                <input type="text" name="input-origin-airport" id="input-origin-airport">
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="input-destination-airport">Destination Airport: </label>
+                            </td>
+                            <td>
+                                <input type="text" name="input-destination-airport" id="input-destination-airport">
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <div>
+                    <button>Create</button>
+                    <button>Cancel</button>
+                </div>
+            </form>
+        </div>
+        <br>
+        <div class="form-div center">
+            <h3>
+                Update Flight
+            </h3>
+            <form id="update-flight-form">
+                <table class="form-table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label for="update-flight-id">Select Flight ID: </label>
+                            </td>
+                            <td>
+                                <select type="text" name="update-flight-id" id="update-flight-id" required>
                                 <option value="flight">Select a Flight</option>
                                 <option value="1">1</option>
                         </select>
-                        </td>
-                        <td>*Required</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="update-plane-id">Plane ID: </label>
-                        </td>
-                        <td>
-                            <input type="text" name="update-plane-id" id="update-plane-id" required>
-                        </td>
-                        <td>*Required</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="update-departure-time">Departure Time: </label>
-                        </td>
-                        <td>
-                            <input type="datetime-local" step="1" name="update-departure-time" id="update-departure-time">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="update-arrival-time">Arrival Time: </label>
-                        </td>
-                        <td>
-                            <input type="datetime-local" step="1" name="update-arrival-time" id="update-arrival-time">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="update-origin-airport">Origin Airport: </label>
-                        </td>
-                        <td>
-                            <input type="text" name="update-origin-airport" id="update-origin-airport">
-                        </td>
-                        <td>*Required</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="update-destination-airport">Destination Airport: </label>
-                        </td>
-                        <td>
-                            <input type="text" name="update-destination-airport" id="update-destination-airport">
-                        </td>
-                        <td>*Required</td>
-                    </tr>
-                </tbody>
-            </table>
-            <br>
-            <div>
-                <button>Update</button>
-                <button>Cancel</button>
-            </div>
-        </form>
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="update-plane-id">Plane ID: </label>
+                            </td>
+                            <td>
+                                <input type="text" name="update-plane-id" id="update-plane-id" required>
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="update-departure-time">Departure Time: </label>
+                            </td>
+                            <td>
+                                <input type="datetime-local" step="1" name="update-departure-time" id="update-departure-time">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="update-arrival-time">Arrival Time: </label>
+                            </td>
+                            <td>
+                                <input type="datetime-local" step="1" name="update-arrival-time" id="update-arrival-time">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="update-origin-airport">Origin Airport: </label>
+                            </td>
+                            <td>
+                                <input type="text" name="update-origin-airport" id="update-origin-airport">
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="update-destination-airport">Destination Airport: </label>
+                            </td>
+                            <td>
+                                <input type="text" name="update-destination-airport" id="update-destination-airport">
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <div>
+                    <button>Update</button>
+                    <button>Cancel</button>
+                </div>
+            </form>
+        </div>
+        <br>
     </div>
+    <footer>
+        <p>Page by Roman and Matthew ©2023</p>
+    </footer>
 </body>
+
 </html>

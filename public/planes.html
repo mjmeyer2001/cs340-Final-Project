@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="./style/main.css" />
     <title>FAA Database</title>
 </head>
+
 <body>
     <header>
         <h1>FAA Database</h1>
@@ -35,139 +37,149 @@
             </ul>
         </div>
     </nav>
-    <h2>
-        Planes
-    </h2>
-    <table class="main-table" id="planes-table">
-        <thead>
-            <tr>
-                <th>Plane ID</th>
-                <th>Airline Name</th>
-                <th>Passenger Capacity</th>
-                <th>Manufacturer</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Delta Airlines</td>
-                <td>350</td>
-                <td>Airbus</td>
-                <td>
-                    <button>Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Delta Airlines</td>
-                <td>110</td>
-                <td>Boeing</td>
-                <td>
-                    <button>Delete</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="form-div">
-        <h3>
-            Create Plane
-        </h3>
-        <form id="add-plane-form">
-            <table class="form-table">
-                <tbody>
-                    <tr>
-                        <td>
-                            <label for="input-airline-id">Airline ID: </label>
-                        </td>
-                        <td>
-                            <input type="text" name="input-airline-id" id="input-airline-id">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="input-passenger-capacity">Passenger Capacity: </label>
-                        </td>
-                        <td>
-                            <input type="number" name="input-passenger-capacity" id="input-passenger-capacity" required>
-                        </td>
-                        <td>*Required</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="input-manufacturer">Manufacturer: </label>
-                        </td>
-                        <td>
-                            <input type="text" name="input-manufacturer" id="input-manufacturer">
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <br>
-            <div>
-                <button>Create</button>
-                <button>Cancel</button>
-            </div>
-        </form>
-    </div>
-    <br>
-    <div class="form-div">
-        <h3>
-            Update Plane
-        </h3>
-        <form id="update-plane-form">
-            <table class="form-table">
-                <tbody>
-                    <tr>
-                        <td>
-                            <label for="update-plane-id">Select Plane ID: </label>
-                        </td>
-                        <td>
-                        <select type="text" name="update-plane-id" id="update-plane-id" required>
+    <div class="main-section">
+        <div class="center">
+            <h2 style="text-align: center">
+                Planes
+            </h2>
+        </div>
+        <table class="main-table center" id="planes-table">
+            <thead>
+                <tr>
+                    <th>Plane ID</th>
+                    <th>Airline Name</th>
+                    <th>Passenger Capacity</th>
+                    <th>Manufacturer</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Delta Airlines</td>
+                    <td>350</td>
+                    <td>Airbus</td>
+                    <td>
+                        <button>Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Delta Airlines</td>
+                    <td>110</td>
+                    <td>Boeing</td>
+                    <td>
+                        <button>Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="form-div center">
+            <h3>
+                Create Plane
+            </h3>
+            <form id="add-plane-form">
+                <table class="form-table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label for="input-airline-id">Airline ID: </label>
+                            </td>
+                            <td>
+                                <input type="text" name="input-airline-id" id="input-airline-id">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="input-passenger-capacity">Passenger Capacity: </label>
+                            </td>
+                            <td>
+                                <input type="number" name="input-passenger-capacity" id="input-passenger-capacity" required>
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="input-manufacturer">Manufacturer: </label>
+                            </td>
+                            <td>
+                                <input type="text" name="input-manufacturer" id="input-manufacturer">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <div>
+                    <button>Create</button>
+                    <button>Cancel</button>
+                </div>
+            </form>
+        </div>
+        <br>
+        <div class="form-div center">
+            <h3>
+                Update Plane
+            </h3>
+            <form id="update-plane-form">
+                <table class="form-table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label for="update-plane-id">Select Plane ID: </label>
+                            </td>
+                            <td>
+                                <select type="text" name="update-plane-id" id="update-plane-id" required>
                                 <option value="plane">Select a Plane</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                         </select>
-                        </td>
-                        <td>*Required</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="update-airline-id">Select Airline ID: </label>
-                        </td>
-                        <td>
-                        <select type="text" name="update-airline-id" id="update-airline-id" required>
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="update-airline-id">Select Airline ID: </label>
+                            </td>
+                            <td>
+                                <select type="text" name="update-airline-id" id="update-airline-id" required>
                                 <option value="plane">Select an Airline ID</option>
                                 <option value="AAL">AAL</option>
                                 <option value="DAL">DAL</option>
                         </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="update-passenger-capacity">Passenger Capacity: </label>
-                        </td>
-                        <td>
-                        <input type="number" name="update-passenger-capacity" id="update-passenger-capacity" required>
-                        </td>
-                        <td>*Required</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label for="update-manufacturer">Manufacturer: </label>
-                        </td>
-                        <td>
-                        <input type="text" name="update-manufacturer" id="update-manufacturer" required>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <br>
-            <div>
-                <button>Update</button>
-                <button>Cancel</button>
-            </div>
-        </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="update-passenger-capacity">Passenger Capacity: </label>
+                            </td>
+                            <td>
+                                <input type="number" name="update-passenger-capacity" id="update-passenger-capacity" required>
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="update-manufacturer">Manufacturer: </label>
+                            </td>
+                            <td>
+                                <input type="text" name="update-manufacturer" id="update-manufacturer" required>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <div>
+                    <button>Update</button>
+                    <button>Cancel</button>
+                </div>
+            </form>
+        </div>
+        <br>
     </div>
+
+    <footer>
+        <p>Page by Roman and Matthew ©2023</p>
+    </footer>
 </body>
+
 </html>
