@@ -61,7 +61,7 @@ INSERT INTO flights VALUES
 (:plane_id, :departure_time, :arrival_time, :origin_airport_id, :destination_airport_id);
 
 -- READ: Get attributes to populate flight table
-SELECT 
+SELECT
 	flights.flight_id,
     flights.plane_id,
     planes.manufacturer,
