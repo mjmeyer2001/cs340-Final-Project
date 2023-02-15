@@ -43,6 +43,29 @@ body {
     background-color: var(--custom-grey);
 }
 
+.main-table {
+    border-collapse: collapse;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.main-table th, td {
+    border: 1px solid black;
+    height: 20px;
+    width: 180px;
+}
+
+.form-table td {
+    border: none;
+}
+
+.form-div {
+    border: 1px solid black;
+    padding: 12px;
+    margin-top: 12px;
+    width: 600px;
+}
+
 footer {
     margin-top: 0%;
     padding-top: 0%;
@@ -85,4 +108,25 @@ ul {
     list-style: none;
     margin: 0 auto;
     text-align: center;
+}
+
+table {
+    border-spacing: 2px;
+    border-collapse: separate;
+}
+
+h2 {
+    display: block;
+}
+
+input {
+    width: 175px;
+}
+
+select {
+    width: 182px;
+}
+
+textarea {
+    width: 175px;
 }
