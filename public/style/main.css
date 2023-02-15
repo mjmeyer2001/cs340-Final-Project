@@ -17,6 +17,10 @@ body {
     background-color: red
 }
 
+.main-section {
+    background-color: var(--light-blue);
+}
+
 .middle {
     width: 50%;
     padding-right: 25%;
@@ -33,10 +37,7 @@ body {
 }
 
 .center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
+    margin: 0 auto;
 }
 
 .mainnav {
@@ -49,7 +50,8 @@ body {
     text-align: center;
 }
 
-.main-table th, td {
+.main-table th,
+td {
     border: 1px solid black;
     height: 20px;
     width: 180px;

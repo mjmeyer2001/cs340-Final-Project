@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="./style/main.css" />
     <title>FAA Database</title>
 </head>
+
 <body>
     <header>
         <h1>FAA Database</h1>
@@ -35,44 +37,53 @@
             </ul>
         </div>
     </nav>
-    <h2>
-        Airlines-Airports
-    </h2>
-    <table class="main-table" id="airlines-airports-table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Airline Name</th>
-                <th>Airport Name</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Delta Airlines</td>
-                <td>Dallas Fort Worth International Airport</td>
-                <td>
-                    <button>Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>American Airlines</td>
-                <td>LaGuardia Airport</td>
-                <td>
-                    <button>Delete</button>
-                </td>
-            </tr>
-            <tr>
-                <td>...</td>
-                <td>...</td>
-                <td>...</td>
-                <td>
-                    <button>Delete</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="main-section">
+        <div class="center">
+            <h2 style="text-align:center">
+                Airlines-Airports
+            </h2>
+        </div>
+        <table class="main-table center" id="airlines-airports-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Airline Name</th>
+                    <th>Airport Name</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Delta Airlines</td>
+                    <td>Dallas Fort Worth International Airport</td>
+                    <td>
+                        <button>Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>American Airlines</td>
+                    <td>LaGuardia Airport</td>
+                    <td>
+                        <button>Delete</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>...</td>
+                    <td>...</td>
+                    <td>...</td>
+                    <td>
+                        <button>Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+    </div>
+    <footer>
+        <p>Page by Roman and Matthew ©2023</p>
+    </footer>
 </body>
+
 </html>
