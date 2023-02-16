@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style/main.css" />
+    <link rel="stylesheet" href="../static/css/main.css" />
     <title>FAA Database</title>
 </head>
 
@@ -17,22 +17,22 @@
         <div class="">
             <ul>
                 <li>
-                    <a title="Home page" href="./index.html">Home</a>
+                    <a title="Home page" href="./">Home</a>
                 </li>
                 <li>
-                    <a title="Airlines page" href="./airlines.html">Airlines</a>
+                    <a title="Airlines page" href="./airlines">Airlines</a>
                 </li>
                 <li>
-                    <a title="Airports page" href="./airports.html">Airports</a>
+                    <a title="Airports page" href="./airports">Airports</a>
                 </li>
                 <li>
-                    <a title="Flights page" href="./flights.html">Flights</a>
+                    <a title="Flights page" href="./flights">Flights</a>
                 </li>
                 <li>
-                    <a title="Planes page" href="./planes.html">Planes</a>
+                    <a title="Planes page" href="./planes">Planes</a>
                 </li>
                 <li>
-                    <a title="Airlines-Airports page" href="./airlines_airports.html">Airlines-Airports</a>
+                    <a title="Airlines-Airports page" href="./airlines_airports">Airlines-Airports</a>
                 </li>
             </ul>
         </div>
@@ -40,35 +40,23 @@
     <div class="main-section">
         <div class="center">
             <h2 style="text-align: center">
-                Airlines
+                Airports
             </h2>
         </div>
-        <table class="main-table center" id="airlines-table">
+        <table class="main-table center" id="airports-table">
             <thead>
                 <tr>
-                    <th>Airline ID</th>
-                    <th>Airline Name</th>
+                    <th>Airport ID</th>
+                    <th>Airport Name</th>
+                    <th>Airport Location</th>
                     <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>AAL</td>
-                    <td>American Airlines</td>
-                    <td>
-                        <button>Delete</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>DAL</td>
-                    <td>Delta Airlines</td>
-                    <td>
-                        <button>Delete</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>...</td>
-                    <td>...</td>
+                    <td>DFW</td>
+                    <td>Dallas Fort Worth International Airport</td>
+                    <td>Dallas, TX</td>
                     <td>
                         <button>Delete</button>
                     </td>
@@ -77,26 +65,35 @@
         </table>
         <div class="form-div center">
             <h3>
-                Create Airline
+                Create Airport
             </h3>
-            <form id="add-airline-form">
+            <form id="add-airport-form">
                 <table class="form-table">
                     <tbody>
                         <tr>
                             <td>
-                                <label for="input-airline-id">Airline ID: </label>
+                                <label for="input-airport-id">Airport ID: </label>
                             </td>
                             <td>
-                                <input type="text" name="input-airline-id" id="input-airline-id" required>
+                                <input type="text" name="input-airport-id" id="input-airport-id" required>
                             </td>
                             <td>*Required</td>
                         </tr>
                         <tr>
                             <td>
-                                <label for="input-airline-name">Airline Name: </label>
+                                <label for="input-airport-name">Airport Name: </label>
                             </td>
                             <td>
-                                <input type="text" name="input-airline-name" id="input-airline-name" required>
+                                <input type="text" name="input-airport-name" id="input-airport-name" required>
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="input-airport-location">Airport Location: </label>
+                            </td>
+                            <td>
+                                <input type="text" name="input-airport-location" id="input-airport-location" required>
                             </td>
                             <td>*Required</td>
                         </tr>
@@ -112,30 +109,38 @@
         <br>
         <div class="form-div center">
             <h3>
-                Update Airline
+                Update Airport
             </h3>
-            <form id="update-airline-form">
+            <form id="update-airport-form">
                 <table class="form-table">
                     <tbody>
                         <tr>
                             <td>
-                                <label for="update-airline-id">Select Airline ID: </label>
+                                <label for="update-airport-id">Select Airport ID: </label>
                             </td>
                             <td>
-                                <select type="text" name="update-airline-id" id="update-airline-id" required>
-                                <option value="airline">Select an Airline</option>
-                                <option value="AAL">AAL</option>
-                                <option value="DAL">DAL</option>
+                                <select type="text" name="update-airport-id" id="update-airport-id" required>
+                                <option value="airport">Select an Airport</option>
+                                <option value="DFW">DFW</option>
                         </select>
                             </td>
                             <td>*Required</td>
                         </tr>
                         <tr>
                             <td>
-                                <label for="update-airline-name">Airline Name: </label>
+                                <label for="update-airport-name">Airport Name: </label>
                             </td>
                             <td>
-                                <input type="text" name="update-airline-name" id="update-airline-name" required>
+                                <input type="text" name="update-airport-name" id="update-airport-name" required>
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="update-airport-location">Airport Location: </label>
+                            </td>
+                            <td>
+                                <input type="text" name="update-airport-namlocatione" id="update-airport-location" required>
                             </td>
                             <td>*Required</td>
                         </tr>
@@ -150,7 +155,6 @@
         </div>
         <br>
     </div>
-
     <footer>
         <p>Page by Roman and Matthew ©2023</p>
     </footer>
