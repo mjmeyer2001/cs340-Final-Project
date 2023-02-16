@@ -49,10 +49,12 @@
                     <tr>
                         <th>Flight ID</th>
                         <th>Plane ID</th>
+                        <th>Manufacturer</th>
+                        <th>Airline Name</th>
                         <th>Departure Time</th>
                         <th>Arrival Time</th>
-                        <th>Origin Airport</th>
-                        <th>Destination Airport</th>
+                        <th>Origin Airport Name</th>
+                        <th>Destination Airport Name</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
@@ -60,13 +62,29 @@
                     <tr>
                         <td>1</td>
                         <td>1</td>
+                        <td>Airbus</td>
+                        <td>Delta Airlines</td>
                         <td>2022-01-01 09:00:00</td>
                         <td>2022-01-01 11:00:00</td>
-                        <td>DFW</td>
-                        <td>LGA</td>
+                        <td>Dallas Fort Worth International Airport</td>
+                        <td>LaGuardia Airport</td>
                         <td>
                             <button>Delete</button>
                         </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>1</td>
+                        <td>Airbus</td>
+                        <td>Delta Airlines</td>
+                        <td>2022-05-06 14:22:22</td>
+                        <td>2022-05-06 19:12:34</td>
+                        <td>Los Angeles International Airport</td>
+                        <td>Hartsfield-Jackson Atlanta International Airport</td>
+                        <td>
+                            <button>Delete</button>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -104,19 +122,27 @@
                         </tr>
                         <tr>
                             <td>
-                                <label for="input-origin-airport">Origin Airport: </label>
+                                <label for="input-origin-airport-id">Origin Airport ID: </label>
                             </td>
                             <td>
-                                <input type="text" name="input-origin-airport" id="input-origin-airport">
+                                <select type="text" name="input-origin-airport-id" id="input-origin-airport-id" required>
+                                    <option value="origin-airport-id">Select an Airport ID</option>
+                                    <option value="DFW">DFW</option>
+                                    <option value="LGA">LGA</option>
+                                </select>
                             </td>
                             <td>*Required</td>
                         </tr>
                         <tr>
                             <td>
-                                <label for="input-destination-airport">Destination Airport: </label>
+                                <label for="input-destination-airport-id">Destination Airport ID: </label>
                             </td>
                             <td>
-                                <input type="text" name="input-destination-airport" id="input-destination-airport">
+                                <select type="text" name="input-destination-airport-id" id="input-destination-airport-id" required>
+                                    <option value="destination-airport-id">Select an Airport ID</option>
+                                    <option value="DFW">DFW</option>
+                                    <option value="LGA">LGA</option>
+                                </select>
                             </td>
                             <td>*Required</td>
                         </tr>
@@ -142,8 +168,8 @@
                                 <label for="update-flight-id">Select Flight ID: </label>
                             </td>
                             <td>
-                                <select type="text" name="update-flight-id" id="update-flight-id" required>
-                                <option value="flight">Select a Flight</option>
+                                <select type="number" name="update-flight-id" id="update-flight-id" required>
+                                <option value="flight">Select a Flight ID</option>
                                 <option value="1">1</option>
                         </select>
                             </td>
@@ -154,7 +180,7 @@
                                 <label for="update-plane-id">Plane ID: </label>
                             </td>
                             <td>
-                                <input type="text" name="update-plane-id" id="update-plane-id" required>
+                                <input type="number" name="update-plane-id" id="update-plane-id" required>
                             </td>
                             <td>*Required</td>
                         </tr>
@@ -176,19 +202,27 @@
                         </tr>
                         <tr>
                             <td>
-                                <label for="update-origin-airport">Origin Airport: </label>
+                                <label for="update-origin-airport">Origin Airport ID: </label>
                             </td>
                             <td>
-                                <input type="text" name="update-origin-airport" id="update-origin-airport">
+                                <select type="text" name="update-origin-airport-id" id="update-origin-airport-id" required>
+                                    <option value="origin-airport-id">Select an Airport ID</option>
+                                    <option value="DFW">DFW</option>
+                                    <option value="LGA">LGA</option>
+                                </select>
                             </td>
                             <td>*Required</td>
                         </tr>
                         <tr>
                             <td>
-                                <label for="update-destination-airport">Destination Airport: </label>
+                                <label for="update-destination-airport">Destination Airport ID: </label>
                             </td>
                             <td>
-                                <input type="text" name="update-destination-airport" id="update-destination-airport">
+                                <select type="text" name="update-destination-airport-id" id="update-destination-airport-id" required>
+                                    <option value="destination-airport-id">Select an Airport ID</option>
+                                    <option value="DFW">DFW</option>
+                                    <option value="LGA">LGA</option>
+                                </select>
                             </td>
                             <td>*Required</td>
                         </tr>
