@@ -1,1 +1,8 @@
 /venv
+/lib
+/lib64
+/include
+/bin
+/__pycache__
+*.swp
+*.cfg

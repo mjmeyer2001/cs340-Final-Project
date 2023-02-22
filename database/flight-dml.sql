@@ -136,7 +136,7 @@ INSERT INTO airlines_airports (airline_id, airport_id) VALUES
     :origin_airport_id_from_create_flight_form)
 
 INSERT INTO airlines_airports (airline_id, airport_id) VALUES
-(SELECT airline_id FROM planes WHERE plane_id = :plane_id_from_create_flight_form),
+((SELECT airline_id FROM planes WHERE plane_id = :plane_id_from_create_flight_form),
     :destination_airport_id_from_create_flight_form)
 
 

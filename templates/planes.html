@@ -86,7 +86,11 @@
                                 <label for="input-airline-id">Airline ID: </label>
                             </td>
                             <td>
-                                <input type="text" name="input-airline-id" id="input-airline-id">
+                                <select type="text" name="input-airline-id" id="input-airline-id">
+                                <option value="plane">Select an Airline ID</option>
+                                <option value="AAL">AAL</option>
+                                <option value="DAL">DAL</option>
+                                </select>
                             </td>
                         </tr>
                         <tr>
@@ -94,7 +98,7 @@
                                 <label for="input-passenger-capacity">Passenger Capacity: </label>
                             </td>
                             <td>
-                                <input type="number" name="input-passenger-capacity" id="input-passenger-capacity" required>
+                                <input type="number" min="1" max="1000" name="input-passenger-capacity" id="input-passenger-capacity" required>
                             </td>
                             <td>*Required</td>
                         </tr>
@@ -130,6 +134,7 @@
                             <td>
                                 <select type="text" name="update-plane-id" id="update-plane-id" required>
                                 <option value="plane">Select a Plane</option>
+                                <option value="null">null</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                         </select>
@@ -153,7 +158,7 @@
                                 <label for="update-passenger-capacity">Passenger Capacity: </label>
                             </td>
                             <td>
-                                <input type="number" name="update-passenger-capacity" id="update-passenger-capacity" required>
+                                <input type="number" min="1" max="1000" name="update-passenger-capacity" id="update-passenger-capacity" required>
                             </td>
                             <td>*Required</td>
                         </tr>
