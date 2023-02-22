@@ -133,12 +133,17 @@ WHERE plane_id = :plane_id_selected_from_table;
 -- destination airport
 INSERT INTO airlines_airports (airline_id, airport_id) VALUES
 ((SELECT airline_id FROM planes WHERE plane_id = :plane_id_from_create_flight_form), 
-    :origin_airport_id_from_create_flight_form)
+    :origin_airport_id_from_create_flight_form);
 
 INSERT INTO airlines_airports (airline_id, airport_id) VALUES
 ((SELECT airline_id FROM planes WHERE plane_id = :plane_id_from_create_flight_form),
-    :destination_airport_id_from_create_flight_form)
+    :destination_airport_id_from_create_flight_form);
 
+-- CREATE: Creates a transaction row directly from the UI form. Most inserts
+-- would likely be a result of adding a new flight, but the ability to insert a
+-- row directly into this table has been added per the project specifications.
+INSERT INTO airlines_airports(airline_id, airport_id) VALUES
+(:airline_id_from_form, :airport_id_from_form);
 
 -- READ: Get attributes to populate airlines-airports table
 SELECT id,
@@ -147,8 +152,6 @@ SELECT id,
 FROM airlines_airports
 JOIN airlines ON airlines_airports.airline_id = airlines.airline_id
 JOIN airports ON airlines_airports.airport_id = airports.airport_id;
-
--- UPDATE:
 
 -- DELETES are handled by CASCADES in the table creations but
 -- are included here for the sake of completeness
@@ -162,3 +165,7 @@ WHERE airline_id = :airline_id_selected_from_airline_table;
 -- page
 DELETE FROM airlines_airports
 WHERE airport_id = :airport_id_selected_from_airport_table;
+
+-- DELETE: Deletes a transaction row if selected from the table
+DELETE FROM airlines_airports
+WHERE id = :id_selected_from_table;
