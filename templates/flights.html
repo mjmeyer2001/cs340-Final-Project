@@ -43,6 +43,9 @@
                 Flights
             </h2>
         </div>
+        <h3 style="text-align: center">
+            Browse Existing Flights
+        </h3>
         <div class="center">
             <table class="main-table center" id="flights-table">
                 <thead>
@@ -100,7 +103,10 @@
                                 <label for="input-plane-id">Plane ID: </label>
                             </td>
                             <td>
-                                <input type="number" name="input-plane-id" id="input-plane-id" required>
+                                <select type="number" name="input-plane-id" id="input-plane-id" required>
+                                    <option value="plane_id">Select a Plane ID</option>
+                                    <option value="1">1</option>
+                                </select>
                             </td>
                             <td>*Required</td>
                         </tr>
@@ -180,7 +186,10 @@
                                 <label for="update-plane-id">Plane ID: </label>
                             </td>
                             <td>
-                                <input type="number" name="update-plane-id" id="update-plane-id" required>
+                                <select type="number" name="update-plane-id" id="update-plane-id" required>
+                                    <option value="plane-id">Select a Plane ID</option>\
+                                    <option value="1">1</option>
+                                </select>
                             </td>
                             <td>*Required</td>
                         </tr>
