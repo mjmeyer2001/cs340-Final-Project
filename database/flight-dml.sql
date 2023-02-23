@@ -15,6 +15,22 @@ SELECT airline_id,
        name
 FROM airlines;
 
+-- READ: Get airline IDs
+SELECT airline_id
+FROM airlines;
+
+-- READ: Get airline info to populate dropdowns
+SELECT CONCAT(airline_id, ' - ', airline_name)
+FROM airlines;
+
+-- READ (SEARCH/FILTER): Get attributes to populate airline table when searching
+-- for an airline
+SELECT airline_id,
+       name
+FROM airlines
+WHERE UPPER(airline_id) LIKE UPPER(CONCAT('%', :airline_search_bar_input, '%'))
+   OR UPPER(airline_name) LIKE UPPER(CONCAT('%', :airline_search_bar_input, '%'));
+
 -- UPDATE: Update an airline's attributes given an airline ID
 UPDATE airlines
 SET name = :name_input
@@ -23,14 +39,6 @@ WHERE airline_id = :airline_id_from_form;
 -- DELETE: Delete an airline
 DELETE FROM airlines
 WHERE airline_id = :airline_id_selected_from_table;
-
--- READ (SEARCH/FILTER): Get attributes to populate airline table when searching
--- for an airline
-SELECT airline_id,
-       name
-FROM airlines
-WHERE UPPER(airline_id) = UPPER(:search_bar_input)
-   OR UPPER(airline_name) = UPPER(:search_bar_input);
 
 
 --
@@ -45,6 +53,14 @@ INSERT INTO airports (airport_id, name, location) VALUES
 SELECT airport_id, 
        name, 
        location
+FROM airports;
+
+-- READ: Get airport IDs to populate dropdowns
+SELECT airport_id
+FROM airports;
+
+-- READ: Get airport info to populate dropdowns
+SELECT CONCAT(airport_id, ' - ', airport_name)
 FROM airports;
 
 -- UPDATE: Update an airport's attribute given an airport ID
@@ -81,6 +97,10 @@ LEFT JOIN airlines ON planes.airline_id = airlines.airline_id
 JOIN airports AS origin ON flights.origin_airport_id = origin.airport_id
 JOIN airports AS destination ON flights.destination_airport_id = destination.airport_id;
 
+-- READ: Get plane IDs to populate plane dropdown
+SELECT plane_id
+FROM planes;
+
 -- UPDATE: Update a flight's attributes given a flight ID
 UPDATE flights
 SET plane_id = :plane_id_from_form_dropdown,
@@ -110,6 +130,10 @@ SELECT planes.plane_id,
        planes.manufacturer
 FROM planes
 LEFT JOIN airlines ON planes.airline_id = airlines.airline_id;
+
+-- READ: Get plane IDs to populate plane ID dropdowns
+SELECT plane_id
+FROM planes;
 
 -- UPDATE: Update a plane's attribute given a plane ID
 UPDATE planes
