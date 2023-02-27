@@ -6,14 +6,66 @@ import os
 
 app = Flask(__name__)
 
-# Routes
+app.config['MYSQL_HOST'] = 'classmysql.engr.oregonstate.edu'
+app.config['MYSQL_USER'] = 'cs340_sosiakr'
+app.config['MYSQL_PASSWORD'] = '7270'
+app.config['MYSQL_DB'] = 'cs340_sosiakr'
+app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+
+mysql = MySQL(app)
+
 @app.route('/')
 def root():
     return render_template("index.html")
 
 @app.route('/airlines')
 def airlines():
-    return render_template("airlines.html")
+
+    query = "SELECT airline_id, name FROM airlines ORDER BY airline_id"
+    cur = mysql.connection.cursor()
+    cur.execute(query)
+    db_airlines = cur.fetchall()
+
+    return render_template(
+        "airlines.j2",
+        airlines=db_airlines)
+
+@app.route('/delete_airline/<string:airline_id>')
+def delete_airline(airline_id):
+    query = "DELETE FROM airlines WHERE airline_id = '%s'" % (airline_id)
+    cur = mysql.connection.cursor()
+    cur.execute(query)
+    mysql.connection.commit()
+
+    cur.close()
+
+    return redirect('/airlines')
+
+@app.route('/update_airline/<string:airline_id>', methods=['POST', 'GET'])
+def update_airline(airline_id):
+
+    if request.method == 'GET':
+        query = "SELECT airline_id, name FROM airlines WHERE airline_id = '%s'" % (airline_id)
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        db_airlines = cur.fetchone()
+        cur.close()
+
+        return render_template("forms/update_airlines.j2", airlines=db_airlines)
+
+    if request.method == 'POST':
+        input_airline_name = request.form['airline-name']
+
+        query = "UPDATE airlines SET name = '%s' WHERE airline_id = '%s'" % (
+        input_airline_name, airline_id)
+
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        mysql.connection.commit()
+
+        cur.close()
+
+        return redirect('/airlines')
 
 @app.route('/airlines_airports')
 def airlines_airports():
@@ -31,7 +83,6 @@ def flights():
 def planes():
     return render_template("planes.html")
 
-# Listener
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 50259))
     app.run(port=port, debug=True)

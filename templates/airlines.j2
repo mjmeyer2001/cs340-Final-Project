@@ -9,6 +9,7 @@
     <title>FAA Database</title>
 </head>
 
+{% block content %}
 <body>
     <header>
         <h1>FAA Database</h1>
@@ -37,7 +38,9 @@
             </ul>
         </div>
     </nav>
+
     <div class="main-section">
+
         <div class="center">
             <h2 style="text-align: center">
                 Airlines
@@ -49,35 +52,32 @@
         <table class="main-table center" id="airlines-table">
             <thead>
                 <tr>
-                    <th>Airline ID</th>
-                    <th>Airline Name</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th scope="col">Airline ID</th>
+                    <th scope="col">Airline Name</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
                 </tr>
             </thead>
             <tbody>
+                {% for airline in airlines %}
                 <tr>
-                    <td>AAL</td>
-                    <td>American Airlines</td>
-                    <td>
-                        <button>Edit</button>
+                    <td scope="row">{{ airline['airline_id'] }}</td>
+                    <td scope="row">{{ airline['name'] }}</td>
+                    <td scope="row">
+                        <form action="update_airline/{{ airline['airline_id'] }}">
+                            <button type="submit">Edit</button>
+                        </form>
                     </td>
-                    <td>
-                        <button>Delete</button>
+                    <td scope="row">
+                        <form action="delete_airline/{{ airline['airline_id'] }}">
+                            <button type="submit">Delete</button>
+                        </form>
                     </td>
                 </tr>
-                <tr>
-                    <td>DAL</td>
-                    <td>Delta Airlines</td>
-                    <td>
-                        <button>Edit</button>
-                    </td>
-                    <td>
-                        <button>Delete</button>
-                    </td>
-                </tr>
+                {% endfor %}
             </tbody>
         </table>
+
         <div class="form-div center">
             <h3>
                 Search Airline
@@ -102,6 +102,7 @@
                 </div>
             </form>
         </div>
+
         <div class="form-div center">
             <h3>
                 Create Airline
@@ -136,51 +137,14 @@
                 </div>
             </form>
         </div>
-        <br>
-        <div class="form-div center">
-            <h3>
-                Update Airline
-            </h3>
-            <form id="update-airline-form">
-                <table class="form-table">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <label for="update-airline-id">Select Airline ID: </label>
-                            </td>
-                            <td>
-                                <select type="text" name="update-airline-id" id="update-airline-id" required>
-                                <option value="airline">Select an Airline</option>
-                                <option value="AAL">AAL</option>
-                                <option value="DAL">DAL</option>
-                        </select>
-                            </td>
-                            <td>*Required</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label for="update-airline-name">Airline Name: </label>
-                            </td>
-                            <td>
-                                <input type="text" name="update-airline-name" id="update-airline-name" required>
-                            </td>
-                            <td>*Required</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-                <div>
-                    <button>Update</button>
-                    <button>Cancel</button>
-                </div>
-            </form>
-        </div>
-        <br>
+
+
     </div>
 
     <footer>
         <p>Page by Roman and Matthew ©2023</p>
     </footer>
 </body>
+{% endblock %}
 
 </html>

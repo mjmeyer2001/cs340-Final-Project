@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/main.css" />
+    <title>FAA Database</title>
+</head>
+
+{% block content %}
+<body>
+    <header>
+        <h1>FAA Database</h1>
+    </header>
+        <nav class="mainnav">
+        <div class="">
+            <ul>
+                <li>
+                    <a title="Home page" href="./">Home</a>
+                </li>
+                <li>
+                    <a title="Airlines page" href="../airlines">Airlines</a>
+                </li>
+                <li>
+                    <a title="Airports page" href="../airports">Airports</a>
+                </li>
+                <li>
+                    <a title="Flights page" href="../flights">Flights</a>
+                </li>
+                <li>
+                    <a title="Planes page" href="../planes">Planes</a>
+                </li>
+                <li>
+                    <a title="Airlines-Airports page" href="../airlines_airports">Airlines-Airports</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="main-section">
+        <div class="center">
+            <h2 style="text-align: center">
+                Airlines
+            </h2>
+        </div>
+        <div class="form-div center">
+            <h3>
+                Update Airline
+            </h3>
+
+            <table class="main-table" id="airlines-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Airline ID</th>
+                        <th scope="col">Current Airline Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td scope="row">{{ airlines['airline_id'] }}</td>
+                        <td scope="row">{{ airlines['name'] }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <br>
+            
+            <form id="update-airline-form" action="/update_airline/{{ airlines['airline_id'] }}" method="post">
+                <div>
+                    <label for="airline-name">New Airline Name: </label>
+                    <input type="text" id="airline-name" name="airline-name" value="{{ airlines['name'] }}" required>
+                </div>
+
+                <br>
+
+                <div>
+                    <button type="submit">Update</button>
+                    <form action="./airlines">
+                        <button type="submit">Cancel</button>
+                    </form>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+{% endblock %}
+</html>
