@@ -66,7 +66,7 @@
                     <td scope="row">
                         <form action="update_airline/{{ airline['airline_id'] }}">
                             <button type="submit">Edit</button>
-                        </form>
+                        </form> 
                     </td>
                     <td scope="row">
                         <form action="delete_airline/{{ airline['airline_id'] }}">
@@ -107,7 +107,7 @@
             <h3>
                 Create Airline
             </h3>
-            <form id="add-airline-form">
+            <form id="add-airline-form" action="/airlines" method="POST">
                 <table class="form-table">
                     <tbody>
                         <tr>
@@ -132,7 +132,7 @@
                 </table>
                 <br>
                 <div>
-                    <button>Create</button>
+                    <button name="insert_airline">Create</button>
                     <button>Cancel</button>
                 </div>
             </form>

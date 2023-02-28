@@ -7,9 +7,9 @@ import os
 app = Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'classmysql.engr.oregonstate.edu'
-app.config['MYSQL_USER'] = 'cs340_sosiakr'
-app.config['MYSQL_PASSWORD'] = '7270'
-app.config['MYSQL_DB'] = 'cs340_sosiakr'
+app.config['MYSQL_USER'] = 'cs340_meyermat'#'cs340_sosiakr'
+app.config['MYSQL_PASSWORD'] = '9415'#'7270'
+app.config['MYSQL_DB'] = 'cs340_meyermat'#cs340_sosiakr'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 mysql = MySQL(app)
@@ -18,17 +18,28 @@ mysql = MySQL(app)
 def root():
     return render_template("index.html")
 
-@app.route('/airlines')
+@app.route('/airlines', methods=['POST', 'GET'])
 def airlines():
+    if request.method == 'GET':
+        query = "SELECT airline_id, name FROM airlines ORDER BY airline_id"
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        db_airlines = cur.fetchall()
 
-    query = "SELECT airline_id, name FROM airlines ORDER BY airline_id"
-    cur = mysql.connection.cursor()
-    cur.execute(query)
-    db_airlines = cur.fetchall()
-
-    return render_template(
-        "airlines.j2",
-        airlines=db_airlines)
+        return render_template(
+            "airlines.j2",
+            airlines=db_airlines)
+    
+    if request.method == 'POST':
+        if request.form.get('insert_airline'):
+            id = request.form["input-airline-id"]
+            name = request.form["input-airline-name"]
+            query = "INSERT INTO airlines (airline_id, name) VALUES ('%s', '%s')"
+            cur = mysql.connection.cursor()
+            cur.execute(query, (id, name))
+            mysql.connection.commit()
+            cur.close()
+            return redirect('/airlines')
 
 @app.route('/delete_airline/<string:airline_id>')
 def delete_airline(airline_id):
