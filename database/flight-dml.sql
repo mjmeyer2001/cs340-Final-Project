@@ -28,8 +28,8 @@ FROM airlines;
 SELECT airline_id,
        name
 FROM airlines
-WHERE UPPER(airline_id) LIKE UPPER(CONCAT('%', :airline_search_bar_input, '%'))
-   OR UPPER(airline_name) LIKE UPPER(CONCAT('%', :airline_search_bar_input, '%'));
+WHERE UPPER(airline_id) LIKE UPPER(CONCAT('%%', :airline_search_bar_input, '%%'))
+   OR UPPER(name) LIKE UPPER(CONCAT('%%', :airline_search_bar_input, '%%'));
 
 -- UPDATE: Update an airline's attributes given an airline ID
 UPDATE airlines

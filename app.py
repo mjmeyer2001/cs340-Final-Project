@@ -1,3 +1,4 @@
+import MySQLdb
 from flask import Flask, render_template, json, redirect
 from flask_mysqldb import MySQL
 from flask import request
@@ -21,17 +22,44 @@ mysql = MySQL(app)
 def root():
     return render_template("index.html")
 
-@app.route('/airlines')
+@app.route('/airlines', methods=['POST', 'GET'])
 def airlines():
 
-    query = "SELECT airline_id, name FROM airlines ORDER BY airline_id"
-    cur = mysql.connection.cursor()
-    cur.execute(query)
-    db_airlines = cur.fetchall()
+    if request.method == 'POST':
+        input_airline_id = request.form['input-airline-id']
+        input_airline_name = request.form['input-airline-name']
 
-    return render_template(
-        "airlines.j2",
-        airlines=db_airlines)
+        query = "INSERT INTO airlines (airline_id, name) VALUES ('%s', '%s')" % (input_airline_id, input_airline_name)
+
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        mysql.connection.commit()
+
+        cur.close()
+
+        return redirect('/airlines')
+
+    if request.method == 'GET':
+        
+        search_query = request.args
+
+        if search_query:
+            search_query = search_query['search']
+            query = """SELECT airline_id, name 
+                         FROM airlines 
+                        WHERE UPPER(airline_id) LIKE UPPER(CONCAT('%%', '%s', '%%')) 
+                           OR UPPER(name) LIKE UPPER(CONCAT('%%', '%s', '%%'))
+                    """ % (search_query, search_query)
+        else:
+            query = "SELECT airline_id, name FROM airlines ORDER BY airline_id"
+
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        db_airlines = cur.fetchall()
+
+        return render_template(
+            "airlines.j2",
+            airlines=db_airlines)
 
 @app.route('/delete_airline/<string:airline_id>')
 def delete_airline(airline_id):
@@ -85,6 +113,10 @@ def flights():
 @app.route('/planes')
 def planes():
     return render_template("planes.html")
+
+@app.errorhandler(MySQLdb.Error)
+def db_error(error):
+    return render_template('error.j2', error=error), 500
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 50259))

@@ -59,23 +59,25 @@
             <h3>
                 Search Airline
             </h3>
-            <form id="search-airline-form">
+            <form id="search-airline-form" method="get">
                 <table class="form-table">
                     <tbody>
                         <tr>
                             <td>
-                                <label for="search-airline-name">Airline Name: </label>
+                                <label for="search">Airline Name: </label>
                             </td>
                             <td>
-                                <input type="text" name="search-airline-name" id="search-airline-name">
+                                <input type="text" name="search" id="search">
                             </td>
                         </tr>
                     </tbody>
                 </table>
                 <br>
                 <div>
-                    <button>Search</button>
-                    <button>Reset</button>
+                    <button type="submit">Search</button>
+                    <form action="./airlines">
+                        <button type="submit">Cancel</button>
+                    </form>
                 </div>
             </form>
         </div>
@@ -84,7 +86,7 @@
             <h3>
                 Create Airline
             </h3>
-            <form id="add-airline-form">
+            <form id="add-airline-form" method="post">
                 <table class="form-table">
                     <tbody>
                         <tr>
@@ -92,7 +94,7 @@
                                 <label for="input-airline-id">Airline ID: </label>
                             </td>
                             <td>
-                                <input type="text" name="input-airline-id" id="input-airline-id" required>
+                                <input type="text" name="input-airline-id" id="input-airline-id" maxlength="3" required>
                             </td>
                             <td>*Required</td>
                         </tr>
@@ -109,8 +111,8 @@
                 </table>
                 <br>
                 <div>
-                    <button>Create</button>
-                    <button>Cancel</button>
+                    <button type="submit">Create</button>
+                    <button type="reset">Cancel</button>
                 </div>
             </form>
         </div>
