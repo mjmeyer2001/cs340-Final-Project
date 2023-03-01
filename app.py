@@ -40,6 +40,21 @@ def airlines():
         cur.close()
         return redirect('/airlines')
 
+@app.route('/search_airlines', methods=['POST'])
+def search_airlines():
+    if request.method == 'POST':
+        name = request.form["search-airline-name"]
+        search_term = '{}%'.format(name)
+        query = "SELECT airline_id, name FROM airlines WHERE name LIKE %s"
+        cur = mysql.connection.cursor()
+        cur.execute(query, (name))
+        search_results = cur.fetchall()
+
+        return render_template(
+            "airlines.j2",
+            airlines=search_results
+        )
+
 @app.route('/delete_airline/<string:airline_id>')
 def delete_airline(airline_id):
     query = "DELETE FROM airlines WHERE airline_id = '%s'" % (airline_id)
@@ -95,4 +110,4 @@ def planes():
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 50259))
-    app.run(host="http://flip1.engr.oregonstate.edu", port=port, debug=True)
+    app.run(port=port, debug=True)
