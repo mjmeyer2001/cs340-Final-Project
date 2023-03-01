@@ -31,15 +31,14 @@ def airlines():
             airlines=db_airlines)
     
     if request.method == 'POST':
-        if request.form.get('insert_airline'):
-            id = request.form["input-airline-id"]
-            name = request.form["input-airline-name"]
-            query = "INSERT INTO airlines (airline_id, name) VALUES ('%s', '%s')"
-            cur = mysql.connection.cursor()
-            cur.execute(query, (id, name))
-            mysql.connection.commit()
-            cur.close()
-            return redirect('/airlines')
+        id = request.form["input-airline-id"]
+        name = request.form["input-airline-name"]
+        query = "INSERT INTO airlines (airline_id, name) VALUES (%s, %s)"
+        cur = mysql.connection.cursor()
+        cur.execute(query, (id, name))
+        mysql.connection.commit()
+        cur.close()
+        return redirect('/airlines')
 
 @app.route('/delete_airline/<string:airline_id>')
 def delete_airline(airline_id):
@@ -96,4 +95,4 @@ def planes():
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 50259))
-    app.run(port=port, debug=True)
+    app.run(host="http://flip1.engr.oregonstate.edu", port=port, debug=True)
