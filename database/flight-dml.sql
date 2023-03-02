@@ -125,7 +125,7 @@ INSERT INTO planes (airline_id, passenger_capacity, manufacturer) VALUES
 
 -- READ: Get attributes to populate plane table
 SELECT planes.plane_id, 
-       airlines.airline_name, 
+       airlines.name AS airline_name, 
        planes.passenger_capacity, 
        planes.manufacturer
 FROM planes
