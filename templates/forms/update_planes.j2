@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/main.css" />
+    <title>FAA Database</title>
+</head>
+
+{% block content %}
+
+<body>
+    <header>
+        <h1>FAA Database</h1>
+    </header>
+
+    {% include 'nav.j2' %}
+
+    <div class="main-section">
+        <div class="center">
+            <h2 style="text-align: center">
+                Planes
+            </h2>
+        </div>
+        <div class="form-div center">
+            <h3>
+                Update Plane
+            </h3>
+
+            <table class="main-table" id="planes-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Plane ID</th>
+                        <th scope="col">Current Airline Name</th>
+                        <th scope="col">Current Passenger Capacity</th>
+                        <th scope="col">Current Manufacturer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td scope="row">{{ planes['plane_id'] }}</td>
+                        <td scope="row">{{ planes['airline_name'] }}</td>
+                        <td scope="row">{{ planes['passenger_capacity'] }}</td>
+                        <td scope="row">{{ planes['manufacturer'] }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <form id="update-plane-form" action="/update_plane/{{ planes['plane_id'] }}" method="post">
+                <table class="form-table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label for="update-airline-id">New Airline: </label>
+                            </td>
+                            <td>
+                                <select type="text" name="update-airline-id" id="update-airline-id" required>
+                                    {% for airline in airlines %}
+                                    {% if airline['airline_id'] == planes['airline_id'] %}
+                                    <option value="{{ airline['airline_id'] }}" selected>
+                                        {{ airline['airline_info'] }}
+                                    </option>
+                                    {% else %}
+                                    <option value="{{ airline['airline_id'] }}">
+                                        {{ airline['airline_info'] }}
+                                    </option>
+                                    {% endif %}
+                                    {% endfor %}
+                                    <option value="null">NULL</option>
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="update-passenger-capacity">New Passenger Capacity:</label>
+                            </td>
+                            <td>
+                                <input type="number" min="1" max="1000" name="update-passenger-capacity"
+                                    id="update-passenger-capacity" value="{{ planes['passenger_capacity'] }}" required>
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="update-manufacturer">New Manufacturer:</label>
+                            </td>
+                            <td>
+                                <input type="text" name="update-manufacturer" id="update-manufacturer"
+                                    value="{{ planes['manufacturer'] }}">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <div>
+                    <button type="submit">Update</button>
+                    <button>Cancel</button>
+                </div>
+            </form>
+        </div>
+
+</body>
+{% endblock %}
+
+</html>

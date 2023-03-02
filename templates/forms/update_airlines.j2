@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,15 +8,13 @@
     <link rel="stylesheet" href="../static/css/main.css" />
     <title>FAA Database</title>
 </head>
-
 {% block content %}
+
 <body>
     <header>
         <h1>FAA Database</h1>
     </header>
-
     {% include 'nav.j2' %}
-
     <div class="main-section">
         <div class="center">
             <h2 style="text-align: center">
@@ -41,26 +40,21 @@
                     </tr>
                 </tbody>
             </table>
-
             <br>
-            
             <form id="update-airline-form" action="/update_airline/{{ airlines['airline_id'] }}" method="post">
                 <div>
                     <label for="airline-name">New Airline Name: </label>
                     <input type="text" id="airline-name" name="airline-name" value="{{ airlines['name'] }}" required>
                 </div>
-
                 <br>
-
                 <div>
                     <button type="submit">Update</button>
-                    <form action="./airlines">
-                        <button type="submit">Cancel</button>
-                    </form>
+                    <button>Cancel</button>
                 </div>
             </form>
         </div>
     </div>
 </body>
 {% endblock %}
+
 </html>

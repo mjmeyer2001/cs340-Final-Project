@@ -18,36 +18,39 @@
     {% include 'nav.j2' %}
 
     <div class="main-section">
-
         <div class="center">
             <h2 style="text-align: center">
-                Airlines
+                Planes
             </h2>
         </div>
         <h3 style="text-align: center">
-            Browse Existing Airlines
+            Browse Existing Planes
         </h3>
-        <table class="main-table center" id="airlines-table">
+        <table class="main-table center" id="planes-table">
             <thead>
                 <tr>
-                    <th scope="col">Airline ID</th>
+                    <th scope="col">Plane ID</th>
                     <th scope="col">Airline Name</th>
+                    <th scope="col">Passenger Capacity</th>
+                    <th scope="col">Manufacturer</th>
                     <th scope="col">Edit</th>
                     <th scope="col">Delete</th>
                 </tr>
             </thead>
             <tbody>
-                {% for airline in airlines %}
+                {% for plane in planes %}
                 <tr>
-                    <td scope="row">{{ airline['airline_id'] }}</td>
-                    <td scope="row">{{ airline['name'] }}</td>
+                    <td scope="row">{{ plane['plane_id'] }}</td>
+                    <td scope="row">{{ plane['airline_name'] }}</td>
+                    <td scope="row">{{ plane['passenger_capacity'] }}</td>
+                    <td scope="row">{{ plane['manufacturer'] }}</td>
                     <td scope="row">
-                        <form action="update_airline/{{ airline['airline_id'] }}">
+                        <form action="update_plane/{{ plane['plane_id'] }}">
                             <button type="submit">Edit</button>
                         </form>
                     </td>
                     <td scope="row">
-                        <form action="delete_airline/{{ airline['airline_id'] }}">
+                        <form action="delete_plane/{{ plane['plane_id'] }}">
                             <button type="submit">Delete</button>
                         </form>
                     </td>
@@ -55,70 +58,53 @@
                 {% endfor %}
             </tbody>
         </table>
-
         <div class="form-div center">
             <h3>
-                Search Airline
+                Create Plane
             </h3>
-            <form id="search-airline-form" method="get">
+            <form id="add-plane-form">
                 <table class="form-table">
                     <tbody>
                         <tr>
                             <td>
-                                <label for="search">Airline Name: </label>
+                                <label for="input-airline-id">Airline: </label>
                             </td>
                             <td>
-                                <input type="text" name="search" id="search">
+                                <select type="text" name="input-airline-id" id="input-airline-id">
+                                    <option value="plane">Select an Airline</option>
+                                    <option value="null">NULL</option>
+                                    <option value="AAL">AAL - American Airlines</option>
+                                    <option value="DAL">DAL - Delta Airlines</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="input-passenger-capacity">Passenger Capacity: </label>
+                            </td>
+                            <td>
+                                <input type="number" min="1" max="1000" name="input-passenger-capacity"
+                                    id="input-passenger-capacity" required>
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="input-manufacturer">Manufacturer: </label>
+                            </td>
+                            <td>
+                                <input type="text" name="input-manufacturer" id="input-manufacturer">
                             </td>
                         </tr>
                     </tbody>
                 </table>
                 <br>
                 <div>
-                    <button type="submit">Search</button>
-                    <form action="./airlines">
-                        <button type="submit">Cancel</button>
-                    </form>
+                    <button>Create</button>
+                    <button>Cancel</button>
                 </div>
             </form>
         </div>
-
-        <div class="form-div center">
-            <h3>
-                Create Airline
-            </h3>
-            <form id="add-airline-form" method="post">
-                <table class="form-table">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <label for="input-airline-id">Airline ID: </label>
-                            </td>
-                            <td>
-                                <input type="text" name="input-airline-id" id="input-airline-id" maxlength="3" required>
-                            </td>
-                            <td>*Required</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label for="input-airline-name">Airline Name: </label>
-                            </td>
-                            <td>
-                                <input type="text" name="input-airline-name" id="input-airline-name" required>
-                            </td>
-                            <td>*Required</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br>
-                <div>
-                    <button type="submit">Create</button>
-                    <button type="reset">Cancel</button>
-                </div>
-            </form>
-        </div>
-
-
     </div>
 
     <footer>
