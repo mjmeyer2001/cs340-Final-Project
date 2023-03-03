@@ -26,22 +26,6 @@ def root():
 @app.route('/airlines', methods=['POST', 'GET'])
 def airlines():
 
-    if request.method == 'POST':
-        input_airline_id = request.form['input-airline-id']
-        input_airline_name = request.form['input-airline-name']
-
-        query = """
-                INSERT INTO airlines (airline_id, name)
-                VALUES ('%s', '%s')""" % (input_airline_id, input_airline_name)
-
-        cur = mysql.connection.cursor()
-        cur.execute(query)
-        mysql.connection.commit()
-
-        cur.close()
-
-        return redirect('/airlines')
-
     if request.method == 'GET':
 
         search_query = request.args
@@ -65,6 +49,22 @@ def airlines():
         return render_template(
             "airlines.j2",
             airlines=db_airlines)
+
+    if request.method == 'POST':
+        input_airline_id = request.form['input-airline-id']
+        input_airline_name = request.form['input-airline-name']
+
+        query = """
+                INSERT INTO airlines (airline_id, name)
+                VALUES ('%s', '%s')""" % (input_airline_id, input_airline_name)
+
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        mysql.connection.commit()
+
+        cur.close()
+
+        return redirect('/airlines')
 
 
 @app.route('/delete_airline/<string:airline_id>')
@@ -136,6 +136,7 @@ def planes():
 
         query = """
                 SELECT planes.plane_id,
+                        airlines.airline_id,
                         airlines.name AS airline_name,
                         planes.passenger_capacity,
                         planes.manufacturer
@@ -147,9 +148,53 @@ def planes():
         cur.execute(query)
         db_planes = cur.fetchall()
 
+        query = """
+                SELECT airline_id,
+                    CONCAT(airline_id, ' - ', name) as airline_info
+                FROM airlines
+                """
+
+        cur.execute(query)
+        db_airlines = cur.fetchall()
+
         return render_template(
             "planes.j2",
-            planes=db_planes)
+            planes=db_planes,
+            airlines=db_airlines)
+
+    if request.method == 'POST':
+
+        input_airline_id = request.form['input-airline-id']
+        input_passenger_capacity = request.form['input-passenger-capacity']
+        input_manufacturer = request.form['input-manufacturer']
+
+        if input_airline_id == 'null':
+            input_airline_id = None
+
+        if input_manufacturer == 'null':
+            input_manufacturer = None
+
+        if input_airline_id:
+            query = """
+                    INSERT INTO planes (airline_id, passenger_capacity,
+                        manufacturer)
+                    VALUES ('%s', '%s', '%s')
+                    """ % (
+                input_airline_id, input_passenger_capacity, input_manufacturer)
+        else:
+            query = """
+                    INSERT INTO planes (airline_id, passenger_capacity,
+                        manufacturer)
+                    VALUES (NULL, '%s', '%s')
+                    """ % (input_passenger_capacity, input_manufacturer)
+
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        mysql.connection.commit()
+
+        cur.close()
+
+        return redirect('/planes')
 
 
 @app.route('/update_plane/<int:plane_id>', methods=['POST', 'GET'])
@@ -198,14 +243,29 @@ def update_plane(plane_id):
         if input_manufacturer == 'null':
             input_manufacturer = None
 
-        query = """
-                UPDATE planes
-                SET airline_id = '%s',
-                    passenger_capacity = '%s',
-                    manufacturer = '%s'
-                WHERE plane_id = '%s'
-                """ % (input_airline_id, input_passenger_capacity,
-                       input_manufacturer, plane_id)
+        if input_airline_id:
+            query = """
+                    UPDATE planes
+                    SET airline_id = '%s',
+                        passenger_capacity = '%s',
+                        manufacturer = '%s'
+                    WHERE plane_id = '%s'
+                    """ % (
+                input_airline_id,
+                input_passenger_capacity,
+                input_manufacturer,
+                plane_id)
+        else:
+            query = """
+                    UPDATE planes
+                    SET airline_id = NULL,
+                        passenger_capacity = '%s',
+                        manufacturer = '%s'
+                    WHERE plane_id = '%s'
+                    """ % (
+                input_passenger_capacity,
+                input_manufacturer,
+                plane_id)
 
         cur = mysql.connection.cursor()
         cur.execute(query)

@@ -20,7 +20,7 @@ SELECT airline_id
 FROM airlines;
 
 -- READ: Get airline info to populate dropdowns
-SELECT CONCAT(airline_id, ' - ', airline_name)
+SELECT CONCAT(airline_id, ' - ', name)
 FROM airlines;
 
 -- READ (SEARCH/FILTER): Get attributes to populate airline table when searching
