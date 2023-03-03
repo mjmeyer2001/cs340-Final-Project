@@ -41,7 +41,13 @@
                 {% for plane in planes %}
                 <tr>
                     <td scope="row">{{ plane['plane_id'] }}</td>
-                    <td scope="row">{{ plane['airline_name'] }}</td>
+                    {% if plane['airline_id'] %}
+                        <td scope="row">
+                            {{ plane['airline_name'] }}
+                        </td>
+                    {% else %}
+                        <td scope="row"></td>
+                    {% endif %}
                     <td scope="row">{{ plane['passenger_capacity'] }}</td>
                     <td scope="row">{{ plane['manufacturer'] }}</td>
                     <td scope="row">
@@ -62,7 +68,7 @@
             <h3>
                 Create Plane
             </h3>
-            <form id="add-plane-form">
+            <form id="add-plane-form" method="post">
                 <table class="form-table">
                     <tbody>
                         <tr>
@@ -71,10 +77,13 @@
                             </td>
                             <td>
                                 <select type="text" name="input-airline-id" id="input-airline-id">
-                                    <option value="plane">Select an Airline</option>
+                                    <option hidden>Select an Airline</option>
+                                    {% for airline in airlines %}
+                                    <option value="{{ airline['airline_id'] }}">
+                                        {{ airline['airline_info'] }}
+                                    </option>
+                                    {% endfor %}
                                     <option value="null">NULL</option>
-                                    <option value="AAL">AAL - American Airlines</option>
-                                    <option value="DAL">DAL - Delta Airlines</option>
                                 </select>
                             </td>
                         </tr>
@@ -100,8 +109,8 @@
                 </table>
                 <br>
                 <div>
-                    <button>Create</button>
-                    <button>Cancel</button>
+                    <button type="submit">Create</button>
+                    <button type="reset">Cancel</button>
                 </div>
             </form>
         </div>
