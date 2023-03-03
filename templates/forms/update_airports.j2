@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/main.css" />
+    <title>FAA Database</title>
+</head>
+
+{% block content %}
+<body>
+    <header>
+        <h1>FAA Database</h1>
+    </header>
+
+    {% include 'nav.j2' %}
+
+    <div class="main-section">
+        <div class="center">
+            <h2 style="text-align: center">
+                Airports
+            </h2>
+        </div>
+        <div class="form-div center">
+            <h3>
+                Update Airport
+            </h3>
+
+            <table class="main-table" id="airports-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Airport ID</th>
+                        <th scope="col">Current Airport Name</th>
+                        <th scope="col">Current Airport Location</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td scope="row">{{ airports['airport_id'] }}</td>
+                        <td scope="row">{{ airports['name'] }}</td>
+                        <td scope="row">{{ airports['location'] }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <form id="update-airport-form"
+                action="/update_airport/{{ airports['airport_id'] }}"
+                method="post">
+                <table class="form-table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label for="update-airport-name">
+                                    New Airport Name: 
+                                </label>
+                            </td>
+                            <td>
+                                <input type="text" name="update-airport-name" 
+                                    id="update-airport-name"
+                                    value="{{ airports['name'] }}" required>
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="update-airport-location">
+                                    New Airport Location: 
+                                </label>
+                            </td>
+                            <td>
+                                <input type="text" 
+                                    name="update-airport-location" 
+                                    id="update-airport-location"
+                                    value="{{ airports['location'] }}"
+                                    required>
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <div>
+                    <button type="submit">Update</button>
+                    <button>Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <footer>
+        <p>Page by Roman and Matthew ©2023</p>
+    </footer>
+    
+</body>
+{% endblock %}
+</html>

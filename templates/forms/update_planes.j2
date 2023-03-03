@@ -48,15 +48,20 @@
                 </tbody>
             </table>
             <br>
-            <form id="update-plane-form" action="/update_plane/{{ planes['plane_id'] }}" method="post">
+            <form id="update-plane-form"
+                action="/update_plane/{{ planes['plane_id'] }}"
+                method="post">
                 <table class="form-table">
                     <tbody>
                         <tr>
                             <td>
-                                <label for="update-airline-id">New Airline: </label>
+                                <label for="update-airline-id">
+                                    New Airline: 
+                                </label>
                             </td>
                             <td>
-                                <select type="text" name="update-airline-id" id="update-airline-id" required>
+                                <select type="text" name="update-airline-id" 
+                                    id="update-airline-id" required>
                                     {% for airline in airlines %}
                                     {% if airline['airline_id'] == planes['airline_id'] %}
                                     <option value="{{ airline['airline_id'] }}" selected>
@@ -100,6 +105,9 @@
                 </div>
             </form>
         </div>
+        <footer>
+            <p>Page by Roman and Matthew ©2023</p>
+        </footer>
 
 </body>
 {% endblock %}

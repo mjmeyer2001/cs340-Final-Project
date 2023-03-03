@@ -119,9 +119,107 @@ def airlines_airports():
     return render_template("airlines_airports.html")
 
 
-@app.route('/airports')
+@app.route('/airports', methods=['POST', 'GET'])
 def airports():
-    return render_template("airports.html")
+
+    if request.method == 'GET':
+        query = """
+                SELECT airport_id,
+                    name,
+                    location
+                FROM airports
+                ORDER BY airport_id
+                """
+
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        db_airports = cur.fetchall()
+
+        return render_template(
+            "airports.j2",
+            airports=db_airports)
+
+    if request.method == 'POST':
+
+        input_airport_id = request.form['input-airport-id']
+        input_airport_name = request.form['input-airport-name']
+        input_airport_location = request.form['input-airport-location']
+
+        input_airport_name = input_airport_name.replace("'", "''")
+        input_airport_location = input_airport_location.replace("'", "''")
+
+        query = """
+                INSERT INTO airports (airport_id, name, location) VALUES
+                ('%s', '%s', '%s')
+                """ % (
+            input_airport_id,
+            input_airport_name,
+            input_airport_location)
+
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        mysql.connection.commit()
+
+        cur.close()
+
+        return redirect('/airports')
+
+
+@app.route('/delete_airport/<string:airport_id>')
+def delete_airport(airport_id):
+    query = "DELETE FROM airports WHERE airport_id = '%s'" % (airport_id)
+    cur = mysql.connection.cursor()
+    cur.execute(query)
+    mysql.connection.commit()
+
+    cur.close()
+
+    return redirect('/airports')
+
+
+@app.route('/update_airport/<string:airport_id>', methods=['POST', 'GET'])
+def update_airport(airport_id):
+
+    if request.method == 'GET':
+        query = """
+                SELECT airport_id,
+                        name,
+                        location
+                FROM airports
+                WHERE airport_id = '%s'
+                """ % (airport_id)
+
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        db_airports = cur.fetchone()
+        cur.close()
+
+        return render_template(
+            "forms/update_airports.j2",
+            airports=db_airports
+        )
+
+    if request.method == 'POST':
+        input_airport_name = request.form['update-airport-name']
+        input_airport_location = request.form['update-airport-location']
+
+        input_airport_name = input_airport_name.replace("'", "''")
+        input_airport_location = input_airport_location.replace("'", "''")
+
+        query = """
+                UPDATE airports
+                SET name = '%s',
+                    location = '%s'
+                WHERE airport_id = '%s'
+                """ % (input_airport_name, input_airport_location, airport_id)
+
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        mysql.connection.commit()
+
+        cur.close()
+
+        return redirect('/airports')
 
 
 @app.route('/flights')
