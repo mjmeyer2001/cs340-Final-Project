@@ -41,9 +41,17 @@
                 <tbody>
                     <tr>
                         <td scope="row">{{ planes['plane_id'] }}</td>
+                        {% if planes['airline_id'] %}
                         <td scope="row">{{ planes['airline_name'] }}</td>
+                        {% else %}
+                        <td scope="row"></td>
+                        {% endif %}
                         <td scope="row">{{ planes['passenger_capacity'] }}</td>
+                        {% if planes['manufacturer'] %}
                         <td scope="row">{{ planes['manufacturer'] }}</td>
+                        {% else %}
+                        <td scope="row"></td>
+                        {% endif %}
                     </tr>
                 </tbody>
             </table>
@@ -92,8 +100,13 @@
                                 <label for="update-manufacturer">New Manufacturer:</label>
                             </td>
                             <td>
+                                {% if planes['manufacturer'] %}
                                 <input type="text" name="update-manufacturer" id="update-manufacturer"
                                     value="{{ planes['manufacturer'] }}">
+                                {% else %}
+                                <input type="text" name="update-manufacturer" id="update-manufacturer"
+                                    value="">
+                                {% endif %}
                             </td>
                         </tr>
                     </tbody>

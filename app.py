@@ -272,19 +272,36 @@ def planes():
         if input_manufacturer == 'null':
             input_manufacturer = None
 
-        if input_airline_id:
+        if input_airline_id and input_manufacturer:
             query = """
                     INSERT INTO planes (airline_id, passenger_capacity,
-                        manufacturer)
-                    VALUES ('%s', '%s', '%s')
+                        manufacturer) VALUES
+                    ('%s', '%s', '%s')
                     """ % (
-                input_airline_id, input_passenger_capacity, input_manufacturer)
-        else:
+                input_airline_id,
+                input_passenger_capacity,
+                input_manufacturer)
+
+        if input_airline_id and not input_manufacturer:
             query = """
                     INSERT INTO planes (airline_id, passenger_capacity,
-                        manufacturer)
-                    VALUES (NULL, '%s', '%s')
+                        manufacturer) VALUES
+                    ('%s', '%s', NULL)
+                    """ % (input_airline_id, input_passenger_capacity)
+
+        if not input_airline_id and input_manufacturer:
+            query = """
+                    INSERT INTO planes (airline_id, passenger_capacity,
+                        manufacturer) VALUES
+                    (NULL, '%s', '%s')
                     """ % (input_passenger_capacity, input_manufacturer)
+
+        if not input_airline_id and not input_manufacturer:
+            query = """
+                    INSERT INTO planes (airline_id, passenger_capacity,
+                        manufacturer) VALUES
+                    (NULL, '%s', NULL)
+                    """ % (input_passenger_capacity)
 
         cur = mysql.connection.cursor()
         cur.execute(query)
@@ -335,13 +352,15 @@ def update_plane(plane_id):
         input_passenger_capacity = request.form['update-passenger-capacity']
         input_manufacturer = request.form['update-manufacturer']
 
-        if input_airline_id == 'null':
+        if input_airline_id == 'null' or input_airline_id == 'None' or \
+                input_airline_id == '':
             input_airline_id = None
 
-        if input_manufacturer == 'null':
+        if input_manufacturer == 'null' or input_manufacturer == 'None' or \
+                input_manufacturer == '':
             input_manufacturer = None
 
-        if input_airline_id:
+        if input_airline_id and input_manufacturer:
             query = """
                     UPDATE planes
                     SET airline_id = '%s',
@@ -352,8 +371,23 @@ def update_plane(plane_id):
                 input_airline_id,
                 input_passenger_capacity,
                 input_manufacturer,
-                plane_id)
-        else:
+                plane_id
+                    )
+
+        if input_airline_id and not input_manufacturer:
+            query = """
+                    UPDATE planes
+                    SET airline_id = '%s',
+                        passenger_capacity = '%s',
+                        manufacturer = NULL
+                    WHERE plane_id = '%s'
+                    """ % (
+                input_airline_id,
+                input_passenger_capacity,
+                plane_id
+                    )
+
+        if not input_airline_id and input_manufacturer:
             query = """
                     UPDATE planes
                     SET airline_id = NULL,
@@ -363,7 +397,20 @@ def update_plane(plane_id):
                     """ % (
                 input_passenger_capacity,
                 input_manufacturer,
-                plane_id)
+                plane_id
+                    )
+
+        if not input_airline_id and not input_manufacturer:
+            query = """
+                    UPDATE planes
+                    SET airline_id = NULL,
+                        passenger_capacity = '%s',
+                        manufacturer = NULL
+                    WHERE plane_id = '%s'
+                    """ % (
+                input_passenger_capacity,
+                plane_id
+                    )
 
         cur = mysql.connection.cursor()
         cur.execute(query)
