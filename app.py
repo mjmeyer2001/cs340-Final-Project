@@ -119,9 +119,107 @@ def airlines_airports():
     return render_template("airlines_airports.html")
 
 
-@app.route('/airports')
+@app.route('/airports', methods=['POST', 'GET'])
 def airports():
-    return render_template("airports.html")
+
+    if request.method == 'GET':
+        query = """
+                SELECT airport_id,
+                    name,
+                    location
+                FROM airports
+                ORDER BY airport_id
+                """
+
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        db_airports = cur.fetchall()
+
+        return render_template(
+            "airports.j2",
+            airports=db_airports)
+
+    if request.method == 'POST':
+
+        input_airport_id = request.form['input-airport-id']
+        input_airport_name = request.form['input-airport-name']
+        input_airport_location = request.form['input-airport-location']
+
+        input_airport_name = input_airport_name.replace("'", "''")
+        input_airport_location = input_airport_location.replace("'", "''")
+
+        query = """
+                INSERT INTO airports (airport_id, name, location) VALUES
+                ('%s', '%s', '%s')
+                """ % (
+            input_airport_id,
+            input_airport_name,
+            input_airport_location)
+
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        mysql.connection.commit()
+
+        cur.close()
+
+        return redirect('/airports')
+
+
+@app.route('/delete_airport/<string:airport_id>')
+def delete_airport(airport_id):
+    query = "DELETE FROM airports WHERE airport_id = '%s'" % (airport_id)
+    cur = mysql.connection.cursor()
+    cur.execute(query)
+    mysql.connection.commit()
+
+    cur.close()
+
+    return redirect('/airports')
+
+
+@app.route('/update_airport/<string:airport_id>', methods=['POST', 'GET'])
+def update_airport(airport_id):
+
+    if request.method == 'GET':
+        query = """
+                SELECT airport_id,
+                        name,
+                        location
+                FROM airports
+                WHERE airport_id = '%s'
+                """ % (airport_id)
+
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        db_airports = cur.fetchone()
+        cur.close()
+
+        return render_template(
+            "forms/update_airports.j2",
+            airports=db_airports
+        )
+
+    if request.method == 'POST':
+        input_airport_name = request.form['update-airport-name']
+        input_airport_location = request.form['update-airport-location']
+
+        input_airport_name = input_airport_name.replace("'", "''")
+        input_airport_location = input_airport_location.replace("'", "''")
+
+        query = """
+                UPDATE airports
+                SET name = '%s',
+                    location = '%s'
+                WHERE airport_id = '%s'
+                """ % (input_airport_name, input_airport_location, airport_id)
+
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        mysql.connection.commit()
+
+        cur.close()
+
+        return redirect('/airports')
 
 
 @app.route('/flights')
@@ -174,19 +272,36 @@ def planes():
         if input_manufacturer == 'null':
             input_manufacturer = None
 
-        if input_airline_id:
+        if input_airline_id and input_manufacturer:
             query = """
                     INSERT INTO planes (airline_id, passenger_capacity,
-                        manufacturer)
-                    VALUES ('%s', '%s', '%s')
+                        manufacturer) VALUES
+                    ('%s', '%s', '%s')
                     """ % (
-                input_airline_id, input_passenger_capacity, input_manufacturer)
-        else:
+                input_airline_id,
+                input_passenger_capacity,
+                input_manufacturer)
+
+        if input_airline_id and not input_manufacturer:
             query = """
                     INSERT INTO planes (airline_id, passenger_capacity,
-                        manufacturer)
-                    VALUES (NULL, '%s', '%s')
+                        manufacturer) VALUES
+                    ('%s', '%s', NULL)
+                    """ % (input_airline_id, input_passenger_capacity)
+
+        if not input_airline_id and input_manufacturer:
+            query = """
+                    INSERT INTO planes (airline_id, passenger_capacity,
+                        manufacturer) VALUES
+                    (NULL, '%s', '%s')
                     """ % (input_passenger_capacity, input_manufacturer)
+
+        if not input_airline_id and not input_manufacturer:
+            query = """
+                    INSERT INTO planes (airline_id, passenger_capacity,
+                        manufacturer) VALUES
+                    (NULL, '%s', NULL)
+                    """ % (input_passenger_capacity)
 
         cur = mysql.connection.cursor()
         cur.execute(query)
@@ -237,13 +352,15 @@ def update_plane(plane_id):
         input_passenger_capacity = request.form['update-passenger-capacity']
         input_manufacturer = request.form['update-manufacturer']
 
-        if input_airline_id == 'null':
+        if input_airline_id == 'null' or input_airline_id == 'None' or \
+                input_airline_id == '':
             input_airline_id = None
 
-        if input_manufacturer == 'null':
+        if input_manufacturer == 'null' or input_manufacturer == 'None' or \
+                input_manufacturer == '':
             input_manufacturer = None
 
-        if input_airline_id:
+        if input_airline_id and input_manufacturer:
             query = """
                     UPDATE planes
                     SET airline_id = '%s',
@@ -254,8 +371,23 @@ def update_plane(plane_id):
                 input_airline_id,
                 input_passenger_capacity,
                 input_manufacturer,
-                plane_id)
-        else:
+                plane_id
+                    )
+
+        if input_airline_id and not input_manufacturer:
+            query = """
+                    UPDATE planes
+                    SET airline_id = '%s',
+                        passenger_capacity = '%s',
+                        manufacturer = NULL
+                    WHERE plane_id = '%s'
+                    """ % (
+                input_airline_id,
+                input_passenger_capacity,
+                plane_id
+                    )
+
+        if not input_airline_id and input_manufacturer:
             query = """
                     UPDATE planes
                     SET airline_id = NULL,
@@ -265,7 +397,20 @@ def update_plane(plane_id):
                     """ % (
                 input_passenger_capacity,
                 input_manufacturer,
-                plane_id)
+                plane_id
+                    )
+
+        if not input_airline_id and not input_manufacturer:
+            query = """
+                    UPDATE planes
+                    SET airline_id = NULL,
+                        passenger_capacity = '%s',
+                        manufacturer = NULL
+                    WHERE plane_id = '%s'
+                    """ % (
+                input_passenger_capacity,
+                plane_id
+                    )
 
         cur = mysql.connection.cursor()
         cur.execute(query)

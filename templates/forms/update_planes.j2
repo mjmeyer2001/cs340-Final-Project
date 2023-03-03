@@ -41,22 +41,35 @@
                 <tbody>
                     <tr>
                         <td scope="row">{{ planes['plane_id'] }}</td>
+                        {% if planes['airline_id'] %}
                         <td scope="row">{{ planes['airline_name'] }}</td>
+                        {% else %}
+                        <td scope="row"></td>
+                        {% endif %}
                         <td scope="row">{{ planes['passenger_capacity'] }}</td>
+                        {% if planes['manufacturer'] %}
                         <td scope="row">{{ planes['manufacturer'] }}</td>
+                        {% else %}
+                        <td scope="row"></td>
+                        {% endif %}
                     </tr>
                 </tbody>
             </table>
             <br>
-            <form id="update-plane-form" action="/update_plane/{{ planes['plane_id'] }}" method="post">
+            <form id="update-plane-form"
+                action="/update_plane/{{ planes['plane_id'] }}"
+                method="post">
                 <table class="form-table">
                     <tbody>
                         <tr>
                             <td>
-                                <label for="update-airline-id">New Airline: </label>
+                                <label for="update-airline-id">
+                                    New Airline: 
+                                </label>
                             </td>
                             <td>
-                                <select type="text" name="update-airline-id" id="update-airline-id" required>
+                                <select type="text" name="update-airline-id" 
+                                    id="update-airline-id" required>
                                     {% for airline in airlines %}
                                     {% if airline['airline_id'] == planes['airline_id'] %}
                                     <option value="{{ airline['airline_id'] }}" selected>
@@ -87,8 +100,13 @@
                                 <label for="update-manufacturer">New Manufacturer:</label>
                             </td>
                             <td>
+                                {% if planes['manufacturer'] %}
                                 <input type="text" name="update-manufacturer" id="update-manufacturer"
                                     value="{{ planes['manufacturer'] }}">
+                                {% else %}
+                                <input type="text" name="update-manufacturer" id="update-manufacturer"
+                                    value="">
+                                {% endif %}
                             </td>
                         </tr>
                     </tbody>
@@ -100,6 +118,9 @@
                 </div>
             </form>
         </div>
+        <footer>
+            <p>Page by Roman and Matthew ©2023</p>
+        </footer>
 
 </body>
 {% endblock %}
