@@ -81,7 +81,11 @@
                                     </option>
                                     {% endif %}
                                     {% endfor %}
+                                    {% if not planes['airline_id'] %}
+                                    <option value="null" selected>NULL</option>
+                                    {% else %}
                                     <option value="null">NULL</option>
+                                    {% endif %}
                             </td>
                             <td>*Required</td>
                         </tr>
