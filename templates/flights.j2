@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/main.css" />
+    <title>FAA Database</title>
+</head>
+
+{% block content %}
+
+<body>
+    <header>
+        <h1>FAA Database</h1>
+    </header>
+    
+    {% include 'nav.j2' %}
+
+    <div class="main-section">
+        <div class="center">
+            <h2 style="text-align: center">
+                Flights
+            </h2>
+        </div>
+        <h3 style="text-align: center">
+            Browse Existing Flights
+        </h3>
+        <div class="center">
+            <table class="main-table center" id="flights-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Flight ID</th>
+                        <th scope="col">Plane ID</th>
+                        <th scope="col">Manufacturer</th>
+                        <th scope="col">Airline Name</th>
+                        <th scope="col">Departure Time</th>
+                        <th scope="col">Arrival Time</th>
+                        <th scope="col">Origin Airport Name</th>
+                        <th scope="col">Destination Airport Name</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for flight in flights %}
+                    <tr>
+                        <td scope="row">{{ flight['flight_id'] }}</td>
+                        <td scope="row">{{ flight['plane_id'] }}</td>
+                        <td scope="row">{{ flight['manufacturer'] }}</td>
+                        <td scope="row">{{ flight['airline_name'] }}</td>
+                        <td scope="row">{{ flight['departure_time'] }}</td>
+                        <td scope="row">{{ flight['arrival_time'] }}</td>
+                        <td scope="row">{{ flight['origin_airport_name'] }}</td>
+                        <td scope="row">{{ flight['destination_airport_name'] }}</td>
+                        <td scope="row">
+                            <form action="update_flight/ {{ flight['flight_id'] }}">
+                                <button>Edit</button>
+                            </form>
+                        </td>
+                        <td scope="row">
+                            <form action="delete_flight/ {{ flight['flight_id'] }}">
+                                <button type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor%}
+                </tbody>
+            </table>
+        </div>
+        <div class="form-div center">
+            <h3>
+                Create Flight
+            </h3>
+            <form id="add-flight-form" method="post">
+                <table class="form-table" >
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label for="input-plane-id">Plane ID: </label>
+                            </td>
+                            <td>
+                                <select type="number" name="input-plane-id" id="input-plane-id" required>
+                                    <option hidden>Select a Plane ID</option>
+                                    {% for plane in planes %}
+                                        <option value="{{ plane['plane_id'] }}">
+                                            {{ plane['plane_info'] }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="input-departure-time">Departure Time: </label>
+                            </td>
+                            <td>
+                                <input type="datetime-local" step="1" name="input-departure-time" id="input-departure-time">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="input-arrival-time">Arrival Time: </label>
+                            </td>
+                            <td>
+                                <input type="datetime-local" step="1" name="input-arrival-time" id="input-arrival-time">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="input-origin-airport-id">Origin Airport: </label>
+                            </td>
+                            <td>
+                                <select type="text" name="input-origin-airport-id" id="input-origin-airport-id" required>
+                                    <option hidden>Select an Airport</option>
+                                    {% for airport in airports %}
+                                        <option value="{{ airport['airport_id'] }}">
+                                            {{ airport['airport_info'] }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="input-destination-airport-id">Destination Airport: </label>
+                            </td>
+                            <td>
+                                <select type="text" name="input-destination-airport-id" id="input-destination-airport-id" required>
+                                    <option hidden>Select an Airport</option>
+                                    {% for airport in airports %}
+                                        <option value="{{ airport['airport_id'] }}">
+                                            {{ airport['airport_info'] }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <div>
+                    <button type="submit">Create</button>
+                    <button type="reset">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <br>
+    </div>
+    <footer>
+        <p>Page by Roman and Matthew ©2023</p>
+    </footer>
+</body>
+
+{% endblock %}
+
+</html>
