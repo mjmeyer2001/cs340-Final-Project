@@ -298,6 +298,41 @@ def flights():
                 input_origin_airport,
                 input_destination_airport        
                      )
+            
+        if input_departure_time and not input_arrival_time:
+            query = """
+                    INSERT INTO flights (plane_id, departure_time,
+                    origin_airport_id, destination_airport_id) VALUES 
+                    ('%s', '%s', '%s', '%s')
+                    """ % (
+                input_plane_id,
+                input_departure_time,
+                input_origin_airport,
+                input_destination_airport        
+                     )
+            
+        if not input_departure_time and input_arrival_time:
+            query = """
+                    INSERT INTO flights (plane_id, arrival_time,
+                    origin_airport_id, destination_airport_id) VALUES 
+                    ('%s', '%s', '%s', '%s')
+                    """ % (
+                input_plane_id,
+                input_arrival_time,
+                input_origin_airport,
+                input_destination_airport        
+                     )
+            
+        if not input_departure_time and not input_arrival_time:
+            query = """
+                    INSERT INTO flights (plane_id,
+                    origin_airport_id, destination_airport_id) VALUES 
+                    ('%s', '%s', '%s')
+                    """ % (
+                input_plane_id,
+                input_origin_airport,
+                input_destination_airport        
+                     )
 
         cur = mysql.connection.cursor()
         cur.execute(query)
@@ -307,6 +342,11 @@ def flights():
 
         return redirect('/flights')
     
+@app.route('/update_flight/<string:flight_id>')
+def update_flight(flight_id):
+
+    return None
+
 @app.route('/delete_flight/<string:flight_id>')
 def delete_flight(flight_id):
     query = "DELETE FROM flights WHERE flight_id = '%s'" % (flight_id)
