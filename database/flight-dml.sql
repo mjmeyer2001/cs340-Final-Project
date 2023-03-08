@@ -8,7 +8,7 @@
 
 -- CREATE: Create a new airline
 INSERT INTO airlines (airline_id, name) VALUES 
-(:airline_id, :name);
+(:airline_id_from_create_form, :name_from_create_form);
 
 -- READ: Get attributes to populate airline table
 SELECT airline_id, 
@@ -30,6 +30,12 @@ SELECT airline_id,
 FROM airlines
 WHERE UPPER(airline_id) LIKE UPPER(CONCAT('%%', :airline_search_bar_input, '%%'))
    OR UPPER(name) LIKE UPPER(CONCAT('%%', :airline_search_bar_input, '%%'));
+
+-- READ: Get airline ID. Used to determine if airline ID already exists in DB
+-- when requesting to add airline to DB.
+SELECT airline_id
+FROM airlines
+WHERE airline_id = :airline_id_from_create_form;
 
 -- UPDATE: Update an airline's attributes given an airline ID
 UPDATE airlines
@@ -53,7 +59,8 @@ INSERT INTO airports (airport_id, name, location) VALUES
 SELECT airport_id, 
        name, 
        location
-FROM airports;
+FROM airports
+ORDER BY airport_id;
 
 -- READ: Get airport IDs to populate dropdowns
 SELECT airport_id
@@ -62,6 +69,12 @@ FROM airports;
 -- READ: Get airport info to populate dropdowns
 SELECT CONCAT(airport_id, ' - ', airport_name)
 FROM airports;
+
+-- READ: Get airport ID. Used to determine if airport ID already exists in DB
+-- when requesting to add airport to DB.
+SELECT airport_id
+FROM airports
+WHERE airport_id = :airport_id_from_create_airport_form;
 
 -- UPDATE: Update an airport's attribute given an airport ID
 UPDATE airports
