@@ -306,7 +306,18 @@ def flights():
         cur.close()
 
         return redirect('/flights')
+    
+@app.route('/delete_flight/<string:flight_id>')
+def delete_flight(flight_id):
+    query = "DELETE FROM flights WHERE flight_id = '%s'" % (flight_id)
 
+    cur = mysql.connection.cursor()
+    cur.execute(query)
+    mysql.connection.commit()
+
+    cur.close()
+
+    return redirect('/flights') 
 
 @app.route('/planes', methods=['POST', 'GET'])
 def planes():
