@@ -386,14 +386,96 @@ def update_flight(flight_id):
         cur.execute(query)
         db_airports = cur.fetchall()
 
-        print(db_flight[0])
-        print(db_planes)
-        print(db_airports)
         return render_template(
             "forms/update_flights.j2",
-            flight=db_flight[0],
+            flight=db_flight[0], #should only have one flight to update, but sql will still return a list
             planes=db_planes,
             airports=db_airports)
+    
+    if request.method == 'POST':
+        input_plane_id = request.form['update-plane-id']
+        input_departure_time = request.form['update-departure-time']
+        input_arrival_time = request.form['update-arrival-time']
+        input_origin_airport = request.form['update-origin-airport-id']
+        input_destination_airport = request.form['update-destination-airport-id']
+
+        if input_arrival_time == 'null':
+            input_arrival_time = None
+
+        if input_departure_time == 'null':
+            input_departure_time = None
+
+        if input_departure_time and input_arrival_time:
+            query = """UPDATE flights
+                    SET plane_id = '%s',
+                    departure_time = '%s',
+                    arrival_time = '%s',
+                    origin_airport_id = '%s',
+                    destination_airport_id = '%s'
+                    WHERE flight_id = '%s'
+                    """ % (
+                        input_plane_id,
+                        input_departure_time,
+                        input_arrival_time,
+                        input_origin_airport,
+                        input_destination_airport,
+                        flight_id
+                    )
+            
+        if input_departure_time and not input_arrival_time:
+            query = """UPDATE flights
+                    SET plane_id = '%s',
+                    departure_time = '%s',
+                    arrival_time = NULL,
+                    origin_airport_id = '%s',
+                    destination_airport_id = '%s'
+                    WHERE flight_id = '%s'
+                    """ % (
+                        input_plane_id,
+                        input_departure_time,
+                        input_origin_airport,
+                        input_destination_airport,
+                        flight_id
+                    )
+            
+        if not input_departure_time and input_arrival_time:
+            query = """UPDATE flights
+                    SET plane_id = '%s',
+                    departure_time = NULL,
+                    arrival_time = '%s',
+                    origin_airport_id = '%s',
+                    destination_airport_id = '%s'
+                    WHERE flight_id = '%s'
+                    """ % (
+                        input_plane_id,
+                        input_arrival_time,
+                        input_origin_airport,
+                        input_destination_airport,
+                        flight_id
+                    )
+            
+        if not input_departure_time and not input_arrival_time:
+            query = """UPDATE flights
+                    SET plane_id = '%s',
+                    departure_time = NULL,
+                    arrival_time = NULL,
+                    origin_airport_id = '%s',
+                    destination_airport_id = '%s'
+                    WHERE flight_id = '%s'
+                    """ % (
+                        input_plane_id,
+                        input_origin_airport,
+                        input_destination_airport,
+                        flight_id
+                    )
+            
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        mysql.connection.commit()
+
+        cur.close()
+
+        return redirect('/flights')
 
 @app.route('/delete_flight/<string:flight_id>')
 def delete_flight(flight_id):
