@@ -43,12 +43,12 @@
                     <td scope="row">{{ airline['name'] }}</td>
                     <td scope="row">
                         <form action="update_airline/{{ airline['airline_id'] }}">
-                            <button type="submit">Edit</button>
+                            <button class="appearance-button" type="submit">Edit</button>
                         </form>
                     </td>
                     <td scope="row">
                         <form action="delete_airline/{{ airline['airline_id'] }}">
-                            <button type="submit">Delete</button>
+                            <button class="appearance-button" type="submit">Delete</button>
                         </form>
                     </td>
                 </tr>
@@ -75,10 +75,8 @@
                 </table>
                 <br>
                 <div>
-                    <button type="submit">Search</button>
-                    <form action="./airlines">
-                        <button type="submit">Cancel</button>
-                    </form>
+                    <input class="appearance-button" type="submit" value="Search">
+                    <input class="appearance-button" type="reset" value="Cancel">
                 </div>
             </form>
         </div>
@@ -87,6 +85,10 @@
             <h3>
                 Create Airline
             </h3>
+            {% if error %}
+                <div><strong>Error: {{ error }}</strong></div>
+                <br>
+            {% endif %}
             <form id="add-airline-form" method="post">
                 <table class="form-table">
                     <tbody>
@@ -112,8 +114,8 @@
                 </table>
                 <br>
                 <div>
-                    <button type="submit">Create</button>
-                    <button type="reset">Cancel</button>
+                    <input class="appearance-button" type="submit" value="Create">
+                    <input class="appearance-button" type="reset" value="Cancel">
                 </div>
             </form>
         </div>

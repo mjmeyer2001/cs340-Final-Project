@@ -54,17 +54,49 @@ def airlines():
         input_airline_id = request.form['input-airline-id']
         input_airline_name = request.form['input-airline-name']
 
+        input_airline_id = input_airline_id.upper()
+        input_airline_id = input_airline_id.replace("'", "''")
+
+        query = """
+                SELECT airline_id
+                FROM airlines
+                WHERE airline_id = '%s'
+                """ % (input_airline_id)
+
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+
+        existing_airline_id = cur.fetchall()
+        airline_id_error = False
+
+        if len(existing_airline_id) > 0:
+            airline_id_error = True
+
+        if not input_airline_id.isalpha():
+            airline_id_error = True
+
         query = """
                 INSERT INTO airlines (airline_id, name)
                 VALUES ('%s', '%s')""" % (input_airline_id, input_airline_name)
 
-        cur = mysql.connection.cursor()
-        cur.execute(query)
-        mysql.connection.commit()
+        if not airline_id_error:
+            cur = mysql.connection.cursor()
+            cur.execute(query)
+            mysql.connection.commit()
+            cur.close()
+            return redirect('/airlines')
+        else:
+            airline_id_error = """
+                Airline ID already exists or contains non-alphabet characters.
+            """
+            query = "SELECT airline_id, name FROM airlines ORDER BY airline_id"
+            cur = mysql.connection.cursor()
+            cur.execute(query)
+            db_airlines = cur.fetchall()
 
-        cur.close()
-
-        return redirect('/airlines')
+            return render_template('airlines.j2',
+                                   airlines=db_airlines,
+                                   error=airline_id_error)
 
 
 @app.route('/delete_airline/<string:airline_id>')
@@ -145,8 +177,28 @@ def airports():
         input_airport_name = request.form['input-airport-name']
         input_airport_location = request.form['input-airport-location']
 
+        input_airport_id = input_airport_id.upper()
+
         input_airport_name = input_airport_name.replace("'", "''")
         input_airport_location = input_airport_location.replace("'", "''")
+
+        query = """
+                SELECT airport_id
+                FROM airports
+                WHERE airport_id = '%s'
+                """ % (input_airport_id)
+
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+
+        existing_airport_id = cur.fetchall()
+        airport_id_error = False
+
+        if len(existing_airport_id) > 0:
+            airport_id_error = True
+
+        if not input_airport_id.isalpha():
+            airport_id_error = True
 
         query = """
                 INSERT INTO airports (airport_id, name, location) VALUES
@@ -156,13 +208,31 @@ def airports():
             input_airport_name,
             input_airport_location)
 
-        cur = mysql.connection.cursor()
-        cur.execute(query)
-        mysql.connection.commit()
+        if not airport_id_error:
+            cur = mysql.connection.cursor()
+            cur.execute(query)
+            mysql.connection.commit()
+            cur.close()
+            return redirect('/airports')
+        else:
+            airport_id_error = """
+                Airport ID already exists or contains non-alphabet characters.
+            """
 
-        cur.close()
+            query = """
+                SELECT airport_id,
+                    name,
+                    location
+                FROM airports
+                ORDER BY airport_id
+                """
+            cur = mysql.connection.cursor()
+            cur.execute(query)
+            db_airports = cur.fetchall()
 
-        return redirect('/airports')
+            return render_template('airports.j2',
+                                   airports=db_airports,
+                                   error=airport_id_error)
 
 
 @app.route('/delete_airport/<string:airport_id>')
