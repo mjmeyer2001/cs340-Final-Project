@@ -45,12 +45,12 @@
                     <td scope="row">{{ airport['location'] }}</td>
                     <td scope="row">
                         <form action="update_airport/{{ airport['airport_id'] }}">
-                            <button type="submit">Edit</button>
+                            <button class="appearance-button" type="submit">Edit</button>
                         </form>
                     </td>
                     <td scope="row">
                         <form action="delete_airport/{{ airport['airport_id'] }}">
-                            <button type="submit">Delete</button>
+                            <button class="appearance-button" type="submit">Delete</button>
                         </form>
                     </td>
                 </tr>
@@ -61,6 +61,10 @@
             <h3>
                 Create Airport
             </h3>
+            {% if error%}
+                <div><strong>Error: {{ error }}</strong></div>
+                <br>
+            {% endif %}
             <form id="add-airport-form" method="post">
                 <table class="form-table">
                     <tbody>
@@ -95,8 +99,8 @@
                 </table>
                 <br>
                 <div>
-                    <button type="submit">Create</button>
-                    <button type="reset">Cancel</button>
+                    <input class="appearance-button" type="submit" value="Create">
+                    <input class="appearance-button" type="reset" value="Cancel">
                 </div>
             </form>
         </div>

@@ -58,12 +58,12 @@
                     {% endif%}
                     <td scope="row">
                         <form action="update_plane/{{ plane['plane_id'] }}">
-                            <button type="submit">Edit</button>
+                            <button class="appearance-button" type="submit">Edit</button>
                         </form>
                     </td>
                     <td scope="row">
                         <form action="delete_plane/{{ plane['plane_id'] }}">
-                            <button type="submit">Delete</button>
+                            <button class="appearance-button" type="submit">Delete</button>
                         </form>
                     </td>
                 </tr>
@@ -115,8 +115,8 @@
                 </table>
                 <br>
                 <div>
-                    <button type="submit">Create</button>
-                    <button type="reset">Cancel</button>
+                    <input class="appearance-button" type="submit" value="Create">
+                    <input class="appearance-button" type="reset" value="Cancel">
                 </div>
             </form>
         </div>

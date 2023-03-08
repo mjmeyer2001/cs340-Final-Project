@@ -68,6 +68,22 @@ td {
     width: 600px;
 }
 
+.appearance-button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    border: 1px solid black;
+    border-radius: 2px;
+    background-color: white;
+    color: black;
+    padding: 3px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    width: fit-content;
+    font-size: 12px;
+}
+
 footer {
     margin-top: 0%;
     padding-top: 0%;
