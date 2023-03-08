@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/main.css" />
+    <title>FAA Database</title>
+</head>
+
+{% block content %}
+
+<body>
+    <header>
+        <h1>FAA Database</h1>
+    </header>
+
+    {% include 'nav.j2' %}
+
+    <div class="main-section">
+        <div class="center">
+            <h2 style="text-align: center">
+                Flights
+            </h2>
+        </div>
+        <div class="form-div center">
+            <h3>
+                Update Flight
+            </h3>
+
+            <table class="main-table" id="planes-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Flight ID</th>
+                        <th scope="col">Current Plane</th>
+                        <th scope="col">Current Departure Time</th>
+                        <th scope="col">Current Arrival Time</th>
+                        <th scope="col">Current Origin Airport</th>
+                        <th scope="col">Current Destination Airport</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td scope="row">{{ flight['flight_id'] }}</td>
+                        <td scope="row">{{ flight['plane_id'] }}</td>
+                        {% if flight['departure_time']%}
+                        <td scope="row">{{ flight['departure_time'] }}</td>
+                        {% else %}
+                        <td scope="row"></td>
+                        {% endif %}
+                        {% if flight['arrival_time']%}
+                        <td scope="row">{{ flight['arrival_time'] }}</td>
+                        {% else %}
+                        <td scope="row"></td>
+                        {% endif %}
+                        <td scope="row">{{ flight['origin_airport_name'] }}</td>
+                        <td scope="row">{{ flight['destination_airport_name'] }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <form id="update-flight-form"
+                action="/update_flight/{{ flight['flight_id'] }}"
+                method="post">
+                <table class="form-table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label for="update-plane-id">
+                                    New Plane: 
+                                </label>
+                            </td>
+                            <td>
+                                <select type="text" name="update-plane-id" 
+                                    id="update-plane-id" required>
+                                    {% for plane in planes %}
+                                    {% if plane['plane_id'] == flight['plane_id'] %}
+                                    <option value="{{ plane['plane_id'] }}" selected>
+                                        {{ plane['plane_info'] }}
+                                    </option>
+                                    {% else %}
+                                    <option value="{{ plane['plane_id'] }}">
+                                        {{ plane['plane_info'] }}
+                                    </option>
+                                    {% endif %}
+                                    {% endfor %}   
+                                </select>                                 
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="update-departure-time">New Departure Time:</label>
+                            </td>
+                            <td>
+                                <input type="datetime-local" step="1" name="update-departure-time" id="update-departure-time"
+                                value="{{ flight['departure_time'] }}" required>
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="update-arrival-time">New Arrival Time:</label>
+                            </td>
+                            <td>
+                                <input type="datetime-local" step="1" name="update-arrival-time" id="update-arrival-time"
+                                value="{{ flight['arrival_time'] }}" required>
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="update-origin-airport-id">New Origin Airport: </label>
+                            </td>
+                            <td>
+                                <select type="text" name="update-origin-airport-id" id="update-origin-airport-id" required>
+                                    {% for airport in airports %}
+                                    {% if flight['origin_airport_id'] == airport['airport_id']%}
+                                        <option value="{{ airport['airport_id'] }}" selected>
+                                            {{ airport['airport_info'] }}
+                                        </option>
+                                    {% else %}
+                                        <option value="{{ airport['airport_id'] }}">
+                                            {{ airport['airport_info'] }}
+                                        </option>
+                                    {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="update-destination-airport-id">New Destination Airport: </label>
+                            </td>
+                            <td>
+                                <select type="text" name="update-destination-airport-id" id="update-destination-airport-id" required>
+                                    {% for airport in airports %}
+                                    {% if flight['destination_airport_id'] == airport['airport_id']%}
+                                        <option value="{{ airport['airport_id'] }}" selected>
+                                            {{ airport['airport_info'] }}
+                                        </option>
+                                    {% else %}
+                                        <option value="{{ airport['airport_id'] }}">
+                                            {{ airport['airport_info'] }}
+                                        </option>
+                                    {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td>*Required</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <div>
+                    <button type="submit">Update</button>
+                    <button type="reset">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <footer>
+            <p>Page by Roman and Matthew ©2023</p>
+        </footer>
+
+</body>
+{% endblock %}
+
+</html>

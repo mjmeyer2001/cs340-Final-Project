@@ -342,10 +342,58 @@ def flights():
 
         return redirect('/flights')
     
-@app.route('/update_flight/<string:flight_id>')
+@app.route('/update_flight/<string:flight_id>', methods=['POST', 'GET'])
 def update_flight(flight_id):
 
-    return None
+    if request.method == 'GET':
+        query = """
+                SELECT flights.flight_id,
+                        flights.plane_id,
+                        flights.departure_time,
+                        flights.arrival_time,
+                        flights.origin_airport_id,
+                        flights.destination_airport_id,
+                        origin.name AS origin_airport_name,
+                        destination.name AS destination_airport_name
+                FROM flights
+                JOIN airports AS origin ON flights.origin_airport_id = origin.airport_id
+                JOIN airports AS destination ON flights.destination_airport_id = destination.airport_id
+                WHERE flight_id = '%s'
+                """ % flight_id
+
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        db_flight = cur.fetchall()
+
+        query = """
+                SELECT planes.plane_id,
+                        REPLACE(CONCAT(planes.plane_id, '-', airlines.name, '-', planes.manufacturer), ' ', '') as plane_info
+                FROM planes
+                LEFT JOIN airlines ON planes.airline_id = airlines.airline_id
+                """
+        
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        db_planes = cur.fetchall()
+
+        query = """
+                SELECT airport_id,
+                    CONCAT(airport_id, ' - ', name) as airport_info
+                FROM airports
+                """
+        
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        db_airports = cur.fetchall()
+
+        print(db_flight[0])
+        print(db_planes)
+        print(db_airports)
+        return render_template(
+            "forms/update_flights.j2",
+            flight=db_flight[0],
+            planes=db_planes,
+            airports=db_airports)
 
 @app.route('/delete_flight/<string:flight_id>')
 def delete_flight(flight_id):
@@ -572,5 +620,5 @@ def db_error(error):
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 50260))
+    port = int(os.environ.get('PORT', 50259))
     app.run(port=port, debug=True)
