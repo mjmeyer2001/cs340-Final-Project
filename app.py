@@ -222,9 +222,90 @@ def update_airport(airport_id):
         return redirect('/airports')
 
 
-@app.route('/flights')
+@app.route('/flights', methods=['POST', 'GET'])
 def flights():
-    return render_template("flights.html")
+    if request.method == 'GET':
+        query = """
+                SELECT flights.flight_id,
+                        flights.plane_id,
+                        planes.manufacturer,
+                        airlines.name as airline_name,
+                        flights.departure_time,
+                        flights.arrival_time,
+                        origin.name AS origin_airport_name,
+                        destination.name as destination_airport_name
+                FROM flights
+                JOIN planes ON flights.plane_id = planes.plane_id
+                LEFT JOIN airlines ON planes.airline_id = airlines.airline_id
+                JOIN airports AS origin ON flights.origin_airport_id = origin.airport_id
+                JOIN airports AS destination ON flights.destination_airport_id = destination.airport_id
+                """
+        
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        db_flights = cur.fetchall()
+
+        query = """
+                SELECT planes.plane_id,
+                        REPLACE(CONCAT(planes.plane_id, '-', airlines.name, '-', planes.manufacturer), ' ', '') as plane_info
+                FROM planes
+                LEFT JOIN airlines ON planes.airline_id = airlines.airline_id
+                """
+        
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        db_planes = cur.fetchall()
+
+        query = """
+                SELECT airport_id,
+                    CONCAT(airport_id, ' - ', name) as airport_info
+                FROM airports
+                """
+        
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        db_airports = cur.fetchall()
+
+        return render_template(
+                "flights.j2",
+                flights=db_flights,
+                planes=db_planes,
+                airports=db_airports)
+    
+    if request.method == 'POST':
+
+        input_plane_id = request.form['input-plane-id']
+        input_departure_time = request.form['input-departure-time']
+        input_arrival_time = request.form['input-arrival-time']
+        input_origin_airport = request.form['input-origin-airport-id']
+        input_destination_airport = request.form['input-destination-airport-id']
+
+        if input_arrival_time == 'null':
+            input_arrival_time = None
+
+        if input_departure_time == 'null':
+            input_departure_time = None
+
+        if input_departure_time and input_arrival_time:
+            query = """
+                    INSERT INTO flights (plane_id, departure_time, arrival_time,
+                    origin_airport_id, destination_airport_id) VALUES 
+                    ('%s', '%s', '%s', '%s', '%s')
+                    """ % (
+                input_plane_id,
+                input_departure_time,
+                input_arrival_time,
+                input_origin_airport,
+                input_destination_airport        
+                     )
+
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        mysql.connection.commit()
+
+        cur.close()
+
+        return redirect('/flights')
 
 
 @app.route('/planes', methods=['POST', 'GET'])
@@ -440,5 +521,5 @@ def db_error(error):
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 50259))
+    port = int(os.environ.get('PORT', 50260))
     app.run(port=port, debug=True)
