@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/main.css" />
+    <title>FAA Database</title>
+</head>
+
+{% block content %}
+
+<body>
+    <header>
+        <h1>FAA Database</h1>
+    </header>
+    
+    {% include 'nav.j2' %}
+
+    <div class="main-section">
+        <div class="center">
+            <h2 style="text-align:center">
+                Airlines-Airports
+            </h2>
+        </div>
+        <h3 style="text-align: center">
+            Browse Existing Airlines-Airports
+        </h3>
+        <table class="main-table center" id="airlines-airports-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Airline Name</th>
+                    <th>Airport Name</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaction in transactions %}
+                    <tr>
+                        <td scope="row">{{ transaction['airline_airport_id'] }}</td>
+                        <td scope="row">{{ transaction['airline_name'] }}</td>
+                        <td scope="row">{{ transaction['airport_name'] }}</td>
+                        <td scope="row">
+                            <form action="delete_airline_airport/ {{ transaction['airline_airport_id'] }}">
+                                <button type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="form-div center">
+            <h3>Create Airline-Airport Transaction</h3>
+            <form id="add-airline-airport-transaction">
+                <table class="form-table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label for="input-airline-id-transaction">Airline: </label>
+                            </td>
+                            <td>
+                                <select type="text" name="input-airline-id-transaction" id="input-airline-id-transaction">
+                                    <option value="airline">Select an Airline</option>
+                                    <option value="null">NULL</option>
+                                    <option value="AAL">AAL - American Airlines</option>
+                                    <option value="DAL">DAL - Delta Airlines</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="input-airport-id-transaction">Airport: </label>
+                            </td>
+                            <td>
+                                <select type="text" name="input-airport-id-transaction" id="input-airport-id-transaction">
+                                    <option value="airport">Select an Airport</option>
+                                    <option value="DFW">DFW - Dallas Fort Worth International Airport</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        <br>
+    </div>
+    <footer>
+        <p>Page by Roman and Matthew ©2023</p>
+    </footer>
+</body>
+
+{% endblock %}
+
+</html>

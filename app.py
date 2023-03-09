@@ -114,9 +114,24 @@ def update_airline(airline_id):
         return redirect('/airlines')
 
 
-@app.route('/airlines_airports')
+@app.route('/airlines_airports', methods=['POST', 'GET'])
 def airlines_airports():
-    return render_template("airlines_airports.html")
+    query = """
+            SELECT airline_airport_id,
+                    airlines.name AS airline_name,
+                    airports.name AS airport_name
+            FROM airlines_airports
+            JOIN airlines ON airlines_airports.airline_id = airlines.airline_id
+            JOIN airports ON airlines_airports.airport_id = airports.airport_id 
+            """
+    
+    cur = mysql.connection.cursor()
+    cur.execute(query)
+    db_transactions = cur.fetchall()
+
+    return render_template(
+        "airlines_airports.j2",
+        transactions=db_transactions)
 
 
 @app.route('/airports', methods=['POST', 'GET'])
@@ -702,5 +717,5 @@ def db_error(error):
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 50259))
+    port = int(os.environ.get('PORT', 50260))
     app.run(port=port, debug=True)
