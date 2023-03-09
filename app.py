@@ -355,6 +355,48 @@ def flights():
 
         cur.close()
 
+        query = """
+                SELECT airline_id FROM planes
+                WHERE plane_id = '%s'
+                """ % (input_plane_id)
+        
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        result = cur.fetchone()
+        airline_id = result['airline_id']
+
+        print(input_origin_airport, airline_id)
+        print(input_destination_airport)
+        query = """
+                INSERT INTO airlines_airports
+                (airline_id, airport_id) VALUES
+                ('%s', '%s')
+                """ % (
+                airline_id,
+                input_origin_airport
+                )
+        
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        mysql.connection.commit()
+
+        cur.close()
+
+        query = """
+                INSERT INTO airlines_airports
+                (airline_id, airport_id) VALUES
+                ('%s', '%s')
+                """ % (
+                airline_id,
+                input_destination_airport
+                )
+        
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        mysql.connection.commit()
+
+        cur.close()
+
         return redirect('/flights')
     
 @app.route('/update_flight/<string:flight_id>', methods=['POST', 'GET'])
