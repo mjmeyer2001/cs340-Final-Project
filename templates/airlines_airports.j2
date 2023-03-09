@@ -53,7 +53,7 @@
         </table>
         <div class="form-div center">
             <h3>Create Airline-Airport Transaction</h3>
-            <form id="add-airline-airport-transaction">
+            <form id="add-airline-airport-transaction" method="post">
                 <table class="form-table">
                     <tbody>
                         <tr>
@@ -61,27 +61,40 @@
                                 <label for="input-airline-id-transaction">Airline: </label>
                             </td>
                             <td>
-                                <select type="text" name="input-airline-id-transaction" id="input-airline-id-transaction">
-                                    <option value="airline">Select an Airline</option>
-                                    <option value="null">NULL</option>
-                                    <option value="AAL">AAL - American Airlines</option>
-                                    <option value="DAL">DAL - Delta Airlines</option>
+                                <select type="text" name="input-airline-id-transaction" id="input-airline-id-transaction" required>
+                                    <option hidden>Select an Airline</option>
+                                    {% for airline in airlines %}
+                                        <option value="{{ airline['airline_id'] }}">
+                                            {{ airline['airline_info'] }}
+                                        </option>
+                                    {% endfor %}
                                 </select>
                             </td>
+                            <td>*Required</td>
                         </tr>
                         <tr>
                             <td>
                                 <label for="input-airport-id-transaction">Airport: </label>
                             </td>
                             <td>
-                                <select type="text" name="input-airport-id-transaction" id="input-airport-id-transaction">
-                                    <option value="airport">Select an Airport</option>
-                                    <option value="DFW">DFW - Dallas Fort Worth International Airport</option>
+                                <select type="text" name="input-airport-id-transaction" id="input-airport-id-transaction" required>
+                                    <option hidden>Select an Airport</option>
+                                    {% for airport in airports %}
+                                        <option value="{{ airport['airport_id'] }}">
+                                            {{ airport['airport_info'] }}
+                                        </option>
+                                    {% endfor %}
                                 </select>
                             </td>
+                            <td>*Required</td>
                         </tr>
                     </tbody>
                 </table>
+                <br>
+                <div>
+                    <button type="submit">Create</button>
+                    <button type="reset">Cancel</button>
+                </div>
             </form>
         </div>
         <br>
