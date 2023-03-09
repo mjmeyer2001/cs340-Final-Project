@@ -33,7 +33,7 @@
                 <thead>
                     <tr>
                         <th scope="col">Flight ID</th>
-                        <th scope="col">Current Plane</th>
+                        <th scope="col">Current Plane ID</th>
                         <th scope="col">Current Departure Time</th>
                         <th scope="col">Current Arrival Time</th>
                         <th scope="col">Current Origin Airport</th>
@@ -60,20 +60,17 @@
                 </tbody>
             </table>
             <br>
-            <form id="update-flight-form"
-                action="/update_flight/{{ flight['flight_id'] }}"
-                method="post">
+            <form id="update-flight-form" action="/update_flight/{{ flight['flight_id'] }}" method="post">
                 <table class="form-table">
                     <tbody>
                         <tr>
                             <td>
                                 <label for="update-plane-id">
-                                    New Plane: 
+                                    New Plane:
                                 </label>
                             </td>
                             <td>
-                                <select type="text" name="update-plane-id" 
-                                    id="update-plane-id" required>
+                                <select type="text" name="update-plane-id" id="update-plane-id" required>
                                     {% for plane in planes %}
                                     {% if plane['plane_id'] == flight['plane_id'] %}
                                     <option value="{{ plane['plane_id'] }}" selected>
@@ -84,8 +81,8 @@
                                         {{ plane['plane_info'] }}
                                     </option>
                                     {% endif %}
-                                    {% endfor %}   
-                                </select>                                 
+                                    {% endfor %}
+                                </select>
                             </td>
                             <td>*Required</td>
                         </tr>
@@ -94,8 +91,8 @@
                                 <label for="update-departure-time">New Departure Time:</label>
                             </td>
                             <td>
-                                <input type="datetime-local" step="1" name="update-departure-time" id="update-departure-time"
-                                value="{{ flight['departure_time'] }}">
+                                <input type="datetime-local" step="1" name="update-departure-time"
+                                    id="update-departure-time" value="{{ flight['departure_time'] }}">
                             </td>
                         </tr>
                         <tr>
@@ -103,8 +100,8 @@
                                 <label for="update-arrival-time">New Arrival Time:</label>
                             </td>
                             <td>
-                                <input type="datetime-local" step="1" name="update-arrival-time" id="update-arrival-time"
-                                value="{{ flight['arrival_time'] }}">
+                                <input type="datetime-local" step="1" name="update-arrival-time"
+                                    id="update-arrival-time" value="{{ flight['arrival_time'] }}">
                             </td>
                         </tr>
                         <tr>
@@ -112,16 +109,17 @@
                                 <label for="update-origin-airport-id">New Origin Airport: </label>
                             </td>
                             <td>
-                                <select type="text" name="update-origin-airport-id" id="update-origin-airport-id" required>
+                                <select type="text" name="update-origin-airport-id" id="update-origin-airport-id"
+                                    required>
                                     {% for airport in airports %}
                                     {% if flight['origin_airport_id'] == airport['airport_id']%}
-                                        <option value="{{ airport['airport_id'] }}" selected>
-                                            {{ airport['airport_info'] }}
-                                        </option>
+                                    <option value="{{ airport['airport_id'] }}" selected>
+                                        {{ airport['airport_info'] }}
+                                    </option>
                                     {% else %}
-                                        <option value="{{ airport['airport_id'] }}">
-                                            {{ airport['airport_info'] }}
-                                        </option>
+                                    <option value="{{ airport['airport_id'] }}">
+                                        {{ airport['airport_info'] }}
+                                    </option>
                                     {% endif %}
                                     {% endfor %}
                                 </select>
@@ -133,16 +131,17 @@
                                 <label for="update-destination-airport-id">New Destination Airport: </label>
                             </td>
                             <td>
-                                <select type="text" name="update-destination-airport-id" id="update-destination-airport-id" required>
+                                <select type="text" name="update-destination-airport-id"
+                                    id="update-destination-airport-id" required>
                                     {% for airport in airports %}
                                     {% if flight['destination_airport_id'] == airport['airport_id']%}
-                                        <option value="{{ airport['airport_id'] }}" selected>
-                                            {{ airport['airport_info'] }}
-                                        </option>
+                                    <option value="{{ airport['airport_id'] }}" selected>
+                                        {{ airport['airport_info'] }}
+                                    </option>
                                     {% else %}
-                                        <option value="{{ airport['airport_id'] }}">
-                                            {{ airport['airport_info'] }}
-                                        </option>
+                                    <option value="{{ airport['airport_id'] }}">
+                                        {{ airport['airport_info'] }}
+                                    </option>
                                     {% endif %}
                                     {% endfor %}
                                 </select>
@@ -153,8 +152,8 @@
                 </table>
                 <br>
                 <div>
-                    <button type="submit">Update</button>
-                    <button type="reset">Cancel</button>
+                    <input class="appearance-button" type="submit" value="Update">
+                    <input class="appearance-button" type="reset" value="Reset">
                 </div>
             </form>
         </div>

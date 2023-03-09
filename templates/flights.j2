@@ -50,18 +50,26 @@
                         <td scope="row">{{ flight['plane_id'] }}</td>
                         <td scope="row">{{ flight['manufacturer'] }}</td>
                         <td scope="row">{{ flight['airline_name'] }}</td>
-                        <td scope="row">{{ flight['departure_time'] }}</td>
-                        <td scope="row">{{ flight['arrival_time'] }}</td>
+                        {% if flight['departure_time'] %}
+                            <td scope="row">{{ flight['departure_time'] }}</td>
+                        {% else %}
+                            <td scope="row"></td>
+                        {% endif  %}
+                        {% if flight['arrival_time'] %}
+                            <td scope="row">{{ flight['arrival_time'] }}</td>
+                        {% else %}
+                            <td scope="row"></td>
+                        {% endif %}
                         <td scope="row">{{ flight['origin_airport_name'] }}</td>
                         <td scope="row">{{ flight['destination_airport_name'] }}</td>
                         <td scope="row">
-                            <form action="update_flight/ {{ flight['flight_id'] }}">
-                                <button>Edit</button>
+                            <form action="update_flight/{{ flight['flight_id'] }}">
+                                <button class="appearance-button" type="submit">Edit</button>
                             </form>
                         </td>
                         <td scope="row">
-                            <form action="delete_flight/ {{ flight['flight_id'] }}">
-                                <button type="submit">Delete</button>
+                            <form action="delete_flight/{{ flight['flight_id'] }}">
+                                <button class="appearance-button" type="submit">Delete</button>
                             </form>
                         </td>
                     </tr>
@@ -74,7 +82,7 @@
                 Create Flight
             </h3>
             <form id="add-flight-form" method="post">
-                <table class="form-table" >
+                <table class="form-table">
                     <tbody>
                         <tr>
                             <td>
@@ -144,8 +152,8 @@
                 </table>
                 <br>
                 <div>
-                    <button type="submit">Create</button>
-                    <button type="reset">Cancel</button>
+                    <input class="appearance-button" type="submit" value="Create">
+                    <input class="appearance-button" type="reset" value="Cancel">
                 </div>
             </form>
         </div>
