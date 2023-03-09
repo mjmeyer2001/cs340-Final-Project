@@ -42,19 +42,19 @@
                 <tr>
                     <td scope="row">{{ plane['plane_id'] }}</td>
                     {% if plane['airline_id'] %}
-                        <td scope="row">
-                            {{ plane['airline_name'] }}
-                        </td>
+                    <td scope="row">
+                        {{ plane['airline_name'] }}
+                    </td>
                     {% else %}
-                        <td scope="row"></td>
+                    <td scope="row"></td>
                     {% endif %}
                     <td scope="row">{{ plane['passenger_capacity'] }}</td>
                     {% if plane['manufacturer'] %}
-                        <td scope="row">
-                            {{ plane['manufacturer'] }}
-                        </td>
+                    <td scope="row">
+                        {{ plane['manufacturer'] }}
+                    </td>
                     {% else %}
-                        <td scope="row"></td>
+                    <td scope="row"></td>
                     {% endif%}
                     <td scope="row">
                         <form action="update_plane/{{ plane['plane_id'] }}">

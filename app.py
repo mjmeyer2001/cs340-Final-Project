@@ -307,21 +307,25 @@ def flights():
                 FROM flights
                 JOIN planes ON flights.plane_id = planes.plane_id
                 LEFT JOIN airlines ON planes.airline_id = airlines.airline_id
-                JOIN airports AS origin ON flights.origin_airport_id = origin.airport_id
-                JOIN airports AS destination ON flights.destination_airport_id = destination.airport_id
+                JOIN airports AS origin
+                    ON flights.origin_airport_id = origin.airport_id
+                JOIN airports AS destination
+                    ON flights.destination_airport_id = destination.airport_id
                 """
-        
+
         cur = mysql.connection.cursor()
         cur.execute(query)
         db_flights = cur.fetchall()
 
         query = """
                 SELECT planes.plane_id,
-                        REPLACE(CONCAT(planes.plane_id, '-', airlines.name, '-', planes.manufacturer), ' ', '') as plane_info
+                        REPLACE(CONCAT(planes.plane_id, ' - ',
+                        airlines.name, ' - ', planes.manufacturer), ' ', '')
+                            AS plane_info
                 FROM planes
                 LEFT JOIN airlines ON planes.airline_id = airlines.airline_id
                 """
-        
+
         cur = mysql.connection.cursor()
         cur.execute(query)
         db_planes = cur.fetchall()
@@ -331,7 +335,7 @@ def flights():
                     CONCAT(airport_id, ' - ', name) as airport_info
                 FROM airports
                 """
-        
+
         cur = mysql.connection.cursor()
         cur.execute(query)
         db_airports = cur.fetchall()
@@ -341,14 +345,15 @@ def flights():
                 flights=db_flights,
                 planes=db_planes,
                 airports=db_airports)
-    
+
     if request.method == 'POST':
 
         input_plane_id = request.form['input-plane-id']
         input_departure_time = request.form['input-departure-time']
         input_arrival_time = request.form['input-arrival-time']
         input_origin_airport = request.form['input-origin-airport-id']
-        input_destination_airport = request.form['input-destination-airport-id']
+        input_destination_airport = request.form[
+            'input-destination-airport-id']
 
         if input_arrival_time == 'null':
             input_arrival_time = None
@@ -358,50 +363,51 @@ def flights():
 
         if input_departure_time and input_arrival_time:
             query = """
-                    INSERT INTO flights (plane_id, departure_time, arrival_time,
-                    origin_airport_id, destination_airport_id) VALUES 
+                    INSERT INTO flights (plane_id, departure_time,
+                        arrival_time,
+                    origin_airport_id, destination_airport_id) VALUES
                     ('%s', '%s', '%s', '%s', '%s')
                     """ % (
                 input_plane_id,
                 input_departure_time,
                 input_arrival_time,
                 input_origin_airport,
-                input_destination_airport        
-                     )
-            
+                input_destination_airport
+                )
+
         if input_departure_time and not input_arrival_time:
             query = """
                     INSERT INTO flights (plane_id, departure_time,
-                    origin_airport_id, destination_airport_id) VALUES 
+                    origin_airport_id, destination_airport_id) VALUES
                     ('%s', '%s', '%s', '%s')
                     """ % (
                 input_plane_id,
                 input_departure_time,
                 input_origin_airport,
-                input_destination_airport        
-                     )
-            
+                input_destination_airport
+                )
+
         if not input_departure_time and input_arrival_time:
             query = """
                     INSERT INTO flights (plane_id, arrival_time,
-                    origin_airport_id, destination_airport_id) VALUES 
+                    origin_airport_id, destination_airport_id) VALUES
                     ('%s', '%s', '%s', '%s')
                     """ % (
                 input_plane_id,
                 input_arrival_time,
                 input_origin_airport,
-                input_destination_airport        
-                     )
-            
+                input_destination_airport
+                )
+
         if not input_departure_time and not input_arrival_time:
             query = """
                     INSERT INTO flights (plane_id,
-                    origin_airport_id, destination_airport_id) VALUES 
+                    origin_airport_id, destination_airport_id) VALUES
                     ('%s', '%s', '%s')
                     """ % (
                 input_plane_id,
                 input_origin_airport,
-                input_destination_airport        
+                input_destination_airport
                      )
 
         cur = mysql.connection.cursor()
@@ -411,63 +417,72 @@ def flights():
         cur.close()
 
         return redirect('/flights')
-    
+
+
 @app.route('/update_flight/<string:flight_id>', methods=['POST', 'GET'])
 def update_flight(flight_id):
 
     if request.method == 'GET':
         query = """
-                SELECT flights.flight_id,
-                        flights.plane_id,
-                        flights.departure_time,
-                        flights.arrival_time,
-                        flights.origin_airport_id,
-                        flights.destination_airport_id,
-                        origin.name AS origin_airport_name,
-                        destination.name AS destination_airport_name
-                FROM flights
-                JOIN airports AS origin ON flights.origin_airport_id = origin.airport_id
-                JOIN airports AS destination ON flights.destination_airport_id = destination.airport_id
-                WHERE flight_id = '%s'
-                """ % flight_id
+        SELECT flights.flight_id,
+                flights.plane_id,
+                planes.manufacturer,
+                airlines.name as airline_name,
+                flights.departure_time,
+                flights.arrival_time,
+                origin.airport_id AS origin_airport_id,
+                origin.name AS origin_airport_name,
+                destination.airport_id AS destination_airport_id,
+                destination.name AS destination_airport_name
+        FROM flights
+        JOIN planes ON flights.plane_id = planes.plane_id
+        LEFT JOIN airlines ON planes.airline_id = airlines.airline_id
+        JOIN airports AS origin
+            ON flights.origin_airport_id = origin.airport_id
+        JOIN airports AS destination
+            ON flights.destination_airport_id = destination.airport_id
+        WHERE flights.flight_id = '%s'
+        """ % (flight_id)
 
         cur = mysql.connection.cursor()
         cur.execute(query)
-        db_flight = cur.fetchall()
+        db_flights = cur.fetchone()
 
         query = """
                 SELECT planes.plane_id,
-                        REPLACE(CONCAT(planes.plane_id, '-', airlines.name, '-', planes.manufacturer), ' ', '') as plane_info
+                        REPLACE(CONCAT(planes.plane_id, ' - ', airlines.name,
+                        ' - ', planes.manufacturer), ' ', '') AS plane_info
                 FROM planes
                 LEFT JOIN airlines ON planes.airline_id = airlines.airline_id
                 """
-        
+
         cur = mysql.connection.cursor()
         cur.execute(query)
         db_planes = cur.fetchall()
 
         query = """
                 SELECT airport_id,
-                    CONCAT(airport_id, ' - ', name) as airport_info
+                    CONCAT(airport_id, ' - ', name) AS airport_info
                 FROM airports
                 """
-        
+
         cur = mysql.connection.cursor()
         cur.execute(query)
         db_airports = cur.fetchall()
 
         return render_template(
             "forms/update_flights.j2",
-            flight=db_flight[0], #should only have one flight to update, but sql will still return a list
+            flight=db_flights,
             planes=db_planes,
             airports=db_airports)
-    
+
     if request.method == 'POST':
         input_plane_id = request.form['update-plane-id']
         input_departure_time = request.form['update-departure-time']
         input_arrival_time = request.form['update-arrival-time']
         input_origin_airport = request.form['update-origin-airport-id']
-        input_destination_airport = request.form['update-destination-airport-id']
+        input_destination_airport = request.form[
+            'update-destination-airport-id']
 
         if input_arrival_time == 'null':
             input_arrival_time = None
@@ -491,7 +506,7 @@ def update_flight(flight_id):
                         input_destination_airport,
                         flight_id
                     )
-            
+
         if input_departure_time and not input_arrival_time:
             query = """UPDATE flights
                     SET plane_id = '%s',
@@ -507,7 +522,7 @@ def update_flight(flight_id):
                         input_destination_airport,
                         flight_id
                     )
-            
+
         if not input_departure_time and input_arrival_time:
             query = """UPDATE flights
                     SET plane_id = '%s',
@@ -523,7 +538,7 @@ def update_flight(flight_id):
                         input_destination_airport,
                         flight_id
                     )
-            
+
         if not input_departure_time and not input_arrival_time:
             query = """UPDATE flights
                     SET plane_id = '%s',
@@ -538,7 +553,7 @@ def update_flight(flight_id):
                         input_destination_airport,
                         flight_id
                     )
-            
+
         cur = mysql.connection.cursor()
         cur.execute(query)
         mysql.connection.commit()
@@ -546,6 +561,7 @@ def update_flight(flight_id):
         cur.close()
 
         return redirect('/flights')
+
 
 @app.route('/delete_flight/<string:flight_id>')
 def delete_flight(flight_id):
@@ -557,7 +573,8 @@ def delete_flight(flight_id):
 
     cur.close()
 
-    return redirect('/flights') 
+    return redirect('/flights')
+
 
 @app.route('/planes', methods=['POST', 'GET'])
 def planes():

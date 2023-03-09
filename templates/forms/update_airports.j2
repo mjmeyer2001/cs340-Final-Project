@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,6 +10,7 @@
 </head>
 
 {% block content %}
+
 <body>
     <header>
         <h1>FAA Database</h1>
@@ -44,20 +46,17 @@
                 </tbody>
             </table>
             <br>
-            <form id="update-airport-form"
-                action="/update_airport/{{ airports['airport_id'] }}"
-                method="post">
+            <form id="update-airport-form" action="/update_airport/{{ airports['airport_id'] }}" method="post">
                 <table class="form-table">
                     <tbody>
                         <tr>
                             <td>
                                 <label for="update-airport-name">
-                                    New Airport Name: 
+                                    New Airport Name:
                                 </label>
                             </td>
                             <td>
-                                <input type="text" name="update-airport-name" 
-                                    id="update-airport-name"
+                                <input type="text" name="update-airport-name" id="update-airport-name"
                                     value="{{ airports['name'] }}" required>
                             </td>
                             <td>*Required</td>
@@ -65,15 +64,12 @@
                         <tr>
                             <td>
                                 <label for="update-airport-location">
-                                    New Airport Location: 
+                                    New Airport Location:
                                 </label>
                             </td>
                             <td>
-                                <input type="text" 
-                                    name="update-airport-location" 
-                                    id="update-airport-location"
-                                    value="{{ airports['location'] }}"
-                                    required>
+                                <input type="text" name="update-airport-location" id="update-airport-location"
+                                    value="{{ airports['location'] }}" required>
                             </td>
                             <td>*Required</td>
                         </tr>
@@ -90,7 +86,8 @@
     <footer>
         <p>Page by Roman and Matthew ©2023</p>
     </footer>
-    
+
 </body>
 {% endblock %}
+
 </html>
