@@ -370,6 +370,7 @@ def flights():
                     ON flights.origin_airport_id = origin.airport_id
                 JOIN airports AS destination
                     ON flights.destination_airport_id = destination.airport_id
+                ORDER BY flights.flight_id
                 """
 
         cur = mysql.connection.cursor()

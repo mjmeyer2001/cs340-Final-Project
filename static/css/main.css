@@ -1,5 +1,5 @@
 :root {
-    --custom-grey: #8C8984;
+    --custom-grey: #d8d5d1;
     --light-blue: #74C2E1;
     --ocean-blue: #0191C8;
     --dark-blue: #005B9A;
@@ -19,6 +19,7 @@ body {
 
 .main-section {
     background-color: var(--light-blue);
+    margin-top: -30px;
 }
 
 .middle {
@@ -42,6 +43,12 @@ body {
 
 .mainnav {
     background-color: var(--custom-grey);
+    text-align: center;
+    margin: 0 auto;
+}
+
+.mainnav ul {
+    display: inline-block;
 }
 
 .main-table {
