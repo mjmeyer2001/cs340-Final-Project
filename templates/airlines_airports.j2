@@ -33,7 +33,6 @@
                     <th>ID</th>
                     <th>Airline Name</th>
                     <th>Airport Name</th>
-                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,11 +41,6 @@
                         <td scope="row">{{ transaction['airline_airport_id'] }}</td>
                         <td scope="row">{{ transaction['airline_name'] }}</td>
                         <td scope="row">{{ transaction['airport_name'] }}</td>
-                        <td scope="row">
-                            <form action="delete_airline_airport/ {{ transaction['airline_airport_id'] }}">
-                                <button type="submit">Delete</button>
-                            </form>
-                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
@@ -92,8 +86,8 @@
                 </table>
                 <br>
                 <div>
-                    <button type="submit">Create</button>
-                    <button type="reset">Cancel</button>
+                    <input class="appearance-button" type="submit" value="Create">
+                    <input class="appearance-button" type="reset" value="Cancel">
                 </div>
             </form>
         </div>

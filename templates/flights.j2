@@ -86,11 +86,11 @@
                     <tbody>
                         <tr>
                             <td>
-                                <label for="input-plane-id">Plane ID: </label>
+                                <label for="input-plane-id">Plane: </label>
                             </td>
                             <td>
                                 <select type="number" name="input-plane-id" id="input-plane-id" required>
-                                    <option hidden>Select a Plane ID</option>
+                                    <option hidden>Select a Plane</option>
                                     {% for plane in planes %}
                                         <option value="{{ plane['plane_id'] }}">
                                             {{ plane['plane_info'] }}

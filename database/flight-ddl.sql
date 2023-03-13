@@ -1,9 +1,16 @@
+--------------------------------------------------------------------------------
+-- CS 340 Portfolio Project
+-- Project Name: FAA Database
+-- Group Members: Matthew Meyer, Roman Sosiak
+-- Group #: 69
+--------------------------------------------------------------------------------
+
 SET FOREIGN_KEY_CHECKS = 0;
 SET AUTOCOMMIT = 0;
 
---
--- Table structure for table `airlines`
---
+--------------------------------------------------------------------------------
+-- Building Airlines
+--------------------------------------------------------------------------------
 
 DROP TABLE IF EXISTS airlines;
 
@@ -13,9 +20,9 @@ CREATE OR REPLACE TABLE airlines (
     PRIMARY KEY (airline_id)
 );
 
---
--- Table structure for table `airports`
---
+--------------------------------------------------------------------------------
+-- Building Airports
+--------------------------------------------------------------------------------
 
 DROP TABLE IF EXISTS airports;
 
@@ -26,9 +33,9 @@ CREATE OR REPLACE TABLE airports (
     PRIMARY KEY (airport_id)
 );
 
---
--- Table structure for table `planes`
---
+--------------------------------------------------------------------------------
+-- Building Planes
+--------------------------------------------------------------------------------
 
 DROP TABLE IF EXISTS planes;
 
@@ -41,9 +48,9 @@ CREATE OR REPLACE TABLE planes (
     FOREIGN KEY (airline_id) REFERENCES airlines(airline_id) ON DELETE CASCADE
 );
 
---
--- Table structure for table `flights`
---
+--------------------------------------------------------------------------------
+-- Building Flights
+--------------------------------------------------------------------------------
 
 DROP TABLE IF EXISTS flights;
 
@@ -60,9 +67,9 @@ CREATE OR REPLACE TABLE flights (
     FOREIGN KEY (destination_airport_id) REFERENCES airports(airport_id) ON DELETE CASCADE
 );
 
---
--- Table structure for table `airlines_airports`
---
+--------------------------------------------------------------------------------
+-- Building Airlines-Airports
+--------------------------------------------------------------------------------
 
 DROP TABLE IF EXISTS airlines_airports;
 
@@ -76,18 +83,18 @@ CREATE OR REPLACE TABLE airlines_airports (
 );
 
 
---
--- Inserting data into table `airlines`
---
+--------------------------------------------------------------------------------
+-- Inserting sample data into Airlines
+--------------------------------------------------------------------------------
 
 INSERT INTO airlines (airline_id, name) VALUES
 ('AAL', 'American Airlines'),
 ('DAL', 'Delta Air Lines'),
 ('JBU', 'JetBlue');
 
---
--- Inserting data into table `airports`
---
+--------------------------------------------------------------------------------
+-- Inserting sample data into Airports
+--------------------------------------------------------------------------------
 
 INSERT INTO airports (airport_id, name, location) VALUES
 ('DFW', 'Dallas Fort Worth International Airport', 'Dallas, TX'),
@@ -96,9 +103,9 @@ INSERT INTO airports (airport_id, name, location) VALUES
 ('ATL', 'Hartsfield-Jackson Atlanta International Airport', 'Atlanta, GA'),
 ('ORD', 'Chicago O''Hare International Airport', 'Chicago, IL');
 
---
--- Inserting data into table `planes`
---
+--------------------------------------------------------------------------------
+-- Inserting sample data into Planes
+--------------------------------------------------------------------------------
 
 INSERT INTO planes (airline_id, passenger_capacity, manufacturer) VALUES
 ('DAL', 350, 'Airbus'),
@@ -107,9 +114,9 @@ INSERT INTO planes (airline_id, passenger_capacity, manufacturer) VALUES
 ('JBU', 140, 'Airbus'),
 ('AAL', 65, 'Bombardier');
 
---
--- Inserting data into table `flights`
---
+--------------------------------------------------------------------------------
+-- Inserting sample data into Flights
+--------------------------------------------------------------------------------
 
 INSERT INTO flights (plane_id, departure_time, arrival_time, origin_airport_id, destination_airport_id) VALUES
 (1, '2022-01-01 09:00:00', '2022-01-01 11:00:00', 'DFW', 'LGA'),
@@ -118,9 +125,9 @@ INSERT INTO flights (plane_id, departure_time, arrival_time, origin_airport_id, 
 (4, '2020-06-07 11:11:11', '2020-06-07 12:12:12', 'ORD', 'DFW'),
 (5, '2022-09-17 04:05:06', '2022-09-17 06:07:08', 'LGA', 'ORD');
 
---
--- Inserting data into table `airlines_airports`
---
+--------------------------------------------------------------------------------
+-- Inserting sample data into Airlines-Airports
+--------------------------------------------------------------------------------
 
 INSERT INTO airlines_airports (airline_id, airport_id) VALUES
 ('DAL', 'DFW'),

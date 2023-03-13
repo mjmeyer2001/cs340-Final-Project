@@ -94,10 +94,11 @@
                     <tbody>
                         <tr>
                             <td>
-                                <label for="input-airline-id">Airline ID: </label>
+                                <label for="input-airline-id">Airline ID (3 Characters): </label>
                             </td>
                             <td>
-                                <input type="text" name="input-airline-id" id="input-airline-id" maxlength="3" required>
+                                <input type="text" name="input-airline-id" id="input-airline-id" minlength="3"
+                                    maxlength="3" pattern="[A-Za-z]{3}" required>
                             </td>
                             <td>*Required</td>
                         </tr>

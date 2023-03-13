@@ -70,10 +70,11 @@
                     <tbody>
                         <tr>
                             <td>
-                                <label for="input-airport-id">Airport ID: </label>
+                                <label for="input-airport-id">Airport ID (3 Characters): </label>
                             </td>
                             <td>
-                                <input type="text" name="input-airport-id" id="input-airport-id" maxlength="3" required>
+                                <input type="text" name="input-airport-id" id="input-airport-id" minlength="3"
+                                    maxlength="3" pattern="[A-Za-z]{3}" required>
                             </td>
                             <td>*Required</td>
                         </tr>
