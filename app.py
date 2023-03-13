@@ -146,9 +146,68 @@ def update_airline(airline_id):
         return redirect('/airlines')
 
 
-@app.route('/airlines_airports')
+@app.route('/airlines_airports', methods=['POST', 'GET'])
 def airlines_airports():
-    return render_template("airlines_airports.html")
+    if request.method == 'GET':
+        query = """
+                SELECT airline_airport_id,
+                        airlines.name AS airline_name,
+                        airports.name AS airport_name
+                FROM airlines_airports
+                JOIN airlines ON airlines_airports.airline_id = airlines.airline_id
+                JOIN airports ON airlines_airports.airport_id = airports.airport_id 
+                """
+        
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        db_transactions = cur.fetchall()
+
+        query = """
+                SELECT airport_id,
+                    CONCAT(airport_id, ' - ', name) as airport_info
+                FROM airports
+                """
+        
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        db_airports = cur.fetchall()
+
+        query = """
+                SELECT airline_id,
+                    CONCAT(airline_id, ' - ', name) as airline_info
+                FROM airlines
+                """
+
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        db_airlines = cur.fetchall()
+
+        return render_template(
+            "airlines_airports.j2",
+            transactions=db_transactions,
+            airlines=db_airlines,
+            airports=db_airports)
+    
+    if request.method == 'POST':
+        input_airline_id = request.form['input-airline-id-transaction']
+        input_airport_id = request.form['input-airport-id-transaction']
+
+        query = """
+                INSERT INTO airlines_airports
+                (airline_id, airport_id) VALUES
+                ('%s', '%s')
+                """ % (
+                input_airline_id,
+                input_airport_id
+                )
+        
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        mysql.connection.commit()
+
+        cur.close()
+
+        return redirect("/airlines_airports")
 
 
 @app.route('/airports', methods=['POST', 'GET'])
@@ -410,6 +469,48 @@ def flights():
                 input_destination_airport
                      )
 
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        mysql.connection.commit()
+
+        cur.close()
+
+        query = """
+                SELECT airline_id FROM planes
+                WHERE plane_id = '%s'
+                """ % (input_plane_id)
+        
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        result = cur.fetchone()
+        airline_id = result['airline_id']
+
+        print(input_origin_airport, airline_id)
+        print(input_destination_airport)
+        query = """
+                INSERT INTO airlines_airports
+                (airline_id, airport_id) VALUES
+                ('%s', '%s')
+                """ % (
+                airline_id,
+                input_origin_airport
+                )
+        
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        mysql.connection.commit()
+
+        cur.close()
+
+        query = """
+                INSERT INTO airlines_airports
+                (airline_id, airport_id) VALUES
+                ('%s', '%s')
+                """ % (
+                airline_id,
+                input_destination_airport
+                )
+        
         cur = mysql.connection.cursor()
         cur.execute(query)
         mysql.connection.commit()
@@ -789,5 +890,5 @@ def db_error(error):
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 50259))
+    port = int(os.environ.get('PORT', 50260))
     app.run(port=port, debug=True)
