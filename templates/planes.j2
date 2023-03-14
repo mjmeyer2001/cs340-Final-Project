@@ -83,7 +83,7 @@
                             </td>
                             <td>
                                 <select type="text" name="input-airline-id" id="input-airline-id">
-                                    <option hidden>Select an Airline</option>
+                                    <option value="null" hidden>Select an Airline</option>
                                     {% for airline in airlines %}
                                     <option value="{{ airline['airline_id'] }}">
                                         {{ airline['airline_info'] }}
@@ -116,7 +116,7 @@
                 <br>
                 <div>
                     <input class="appearance-button" type="submit" value="Create">
-                    <input class="appearance-button" type="reset" value="Cancel">
+                    <input class="appearance-button" type="reset" value="Reset">
                 </div>
             </form>
         </div>

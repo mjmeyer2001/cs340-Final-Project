@@ -90,7 +90,7 @@
                             </td>
                             <td>
                                 <select type="number" name="input-plane-id" id="input-plane-id" required>
-                                    <option hidden>Select a Plane</option>
+                                    <option value="" hidden>Select a Plane</option>
                                     {% for plane in planes %}
                                         <option value="{{ plane['plane_id'] }}">
                                             {{ plane['plane_info'] }}
@@ -122,7 +122,7 @@
                             </td>
                             <td>
                                 <select type="text" name="input-origin-airport-id" id="input-origin-airport-id" required>
-                                    <option hidden>Select an Airport</option>
+                                    <option value="" hidden>Select an Airport</option>
                                     {% for airport in airports %}
                                         <option value="{{ airport['airport_id'] }}">
                                             {{ airport['airport_info'] }}
@@ -138,7 +138,7 @@
                             </td>
                             <td>
                                 <select type="text" name="input-destination-airport-id" id="input-destination-airport-id" required>
-                                    <option hidden>Select an Airport</option>
+                                    <option value="" hidden>Select an Airport</option>
                                     {% for airport in airports %}
                                         <option value="{{ airport['airport_id'] }}">
                                             {{ airport['airport_info'] }}
@@ -153,7 +153,7 @@
                 <br>
                 <div>
                     <input class="appearance-button" type="submit" value="Create">
-                    <input class="appearance-button" type="reset" value="Cancel">
+                    <input class="appearance-button" type="reset" value="Reset">
                 </div>
             </form>
         </div>
