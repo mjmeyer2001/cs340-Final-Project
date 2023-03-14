@@ -56,7 +56,7 @@
                             </td>
                             <td>
                                 <select type="text" name="input-airline-id-transaction" id="input-airline-id-transaction" required>
-                                    <option hidden>Select an Airline</option>
+                                    <option value="" hidden>Select an Airline</option>
                                     {% for airline in airlines %}
                                         <option value="{{ airline['airline_id'] }}">
                                             {{ airline['airline_info'] }}
@@ -72,7 +72,7 @@
                             </td>
                             <td>
                                 <select type="text" name="input-airport-id-transaction" id="input-airport-id-transaction" required>
-                                    <option hidden>Select an Airport</option>
+                                    <option value="" hidden>Select an Airport</option>
                                     {% for airport in airports %}
                                         <option value="{{ airport['airport_id'] }}">
                                             {{ airport['airport_info'] }}
@@ -87,7 +87,7 @@
                 <br>
                 <div>
                     <input class="appearance-button" type="submit" value="Create">
-                    <input class="appearance-button" type="reset" value="Cancel">
+                    <input class="appearance-button" type="reset" value="Reset">
                 </div>
             </form>
         </div>
