@@ -15,7 +15,7 @@
     <header>
         <h1>FAA Database</h1>
     </header>
-    
+
     {% include 'nav.j2' %}
 
     <div class="main-section">
@@ -33,8 +33,8 @@
                     <tr>
                         <th scope="col">Flight ID</th>
                         <th scope="col">Plane ID</th>
-                        <th scope="col">Manufacturer</th>
                         <th scope="col">Airline Name</th>
+                        <th scope="col">Manufacturer</th>
                         <th scope="col">Departure Time</th>
                         <th scope="col">Arrival Time</th>
                         <th scope="col">Origin Airport Name</th>
@@ -48,17 +48,25 @@
                     <tr>
                         <td scope="row">{{ flight['flight_id'] }}</td>
                         <td scope="row">{{ flight['plane_id'] }}</td>
-                        <td scope="row">{{ flight['manufacturer'] }}</td>
+                        {% if flight['airline_name'] %}
                         <td scope="row">{{ flight['airline_name'] }}</td>
+                        {% else %}
+                        <td scope="row"></td>
+                        {% endif %}
+                        {% if flight['manufacturer'] %}
+                        <td scope="row">{{ flight['manufacturer'] }}</td>
+                        {% else %}
+                        <td scope="row"></td>
+                        {% endif %}
                         {% if flight['departure_time'] %}
-                            <td scope="row">{{ flight['departure_time'] }}</td>
+                        <td scope="row">{{ flight['departure_time'] }}</td>
                         {% else %}
-                            <td scope="row"></td>
-                        {% endif  %}
+                        <td scope="row"></td>
+                        {% endif %}
                         {% if flight['arrival_time'] %}
-                            <td scope="row">{{ flight['arrival_time'] }}</td>
+                        <td scope="row">{{ flight['arrival_time'] }}</td>
                         {% else %}
-                            <td scope="row"></td>
+                        <td scope="row"></td>
                         {% endif %}
                         <td scope="row">{{ flight['origin_airport_name'] }}</td>
                         <td scope="row">{{ flight['destination_airport_name'] }}</td>
@@ -92,9 +100,9 @@
                                 <select type="number" name="input-plane-id" id="input-plane-id" required>
                                     <option value="" hidden>Select a Plane</option>
                                     {% for plane in planes %}
-                                        <option value="{{ plane['plane_id'] }}">
-                                            {{ plane['plane_info'] }}
-                                        </option>
+                                    <option value="{{ plane['plane_id'] }}">
+                                        {{ plane['plane_info'] }}
+                                    </option>
                                     {% endfor %}
                                 </select>
                             </td>
@@ -105,7 +113,8 @@
                                 <label for="input-departure-time">Departure Time: </label>
                             </td>
                             <td>
-                                <input type="datetime-local" step="1" name="input-departure-time" id="input-departure-time">
+                                <input type="datetime-local" step="1" name="input-departure-time"
+                                    id="input-departure-time">
                             </td>
                         </tr>
                         <tr>
@@ -121,12 +130,13 @@
                                 <label for="input-origin-airport-id">Origin Airport: </label>
                             </td>
                             <td>
-                                <select type="text" name="input-origin-airport-id" id="input-origin-airport-id" required>
+                                <select type="text" name="input-origin-airport-id" id="input-origin-airport-id"
+                                    required>
                                     <option value="" hidden>Select an Airport</option>
                                     {% for airport in airports %}
-                                        <option value="{{ airport['airport_id'] }}">
-                                            {{ airport['airport_info'] }}
-                                        </option>
+                                    <option value="{{ airport['airport_id'] }}">
+                                        {{ airport['airport_info'] }}
+                                    </option>
                                     {% endfor %}
                                 </select>
                             </td>
@@ -137,12 +147,13 @@
                                 <label for="input-destination-airport-id">Destination Airport: </label>
                             </td>
                             <td>
-                                <select type="text" name="input-destination-airport-id" id="input-destination-airport-id" required>
+                                <select type="text" name="input-destination-airport-id"
+                                    id="input-destination-airport-id" required>
                                     <option value="" hidden>Select an Airport</option>
                                     {% for airport in airports %}
-                                        <option value="{{ airport['airport_id'] }}">
-                                            {{ airport['airport_info'] }}
-                                        </option>
+                                    <option value="{{ airport['airport_id'] }}">
+                                        {{ airport['airport_info'] }}
+                                    </option>
                                     {% endfor %}
                                 </select>
                             </td>

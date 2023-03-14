@@ -445,8 +445,9 @@ def flights():
         query = """
                 SELECT planes.plane_id,
                         REPLACE(CONCAT(planes.plane_id, ' - ',
-                        airlines.name, ' - ', planes.manufacturer), ' ', ' ')
-                            AS plane_info
+                        COALESCE(airlines.name, 'NO AIRLINE'), ' - ',
+                        COALESCE(planes.manufacturer, 'NO MANUFACTURER')),
+                        ' ', ' ') AS plane_info
                 FROM planes
                 LEFT JOIN airlines ON planes.airline_id = airlines.airline_id
                 """
@@ -562,35 +563,37 @@ def flights():
 
         # insert operation to populate M:M airlines_airports table with
         # airline ID, origin airport ID
-        query = """
-                INSERT INTO airlines_airports
-                (airline_id, airport_id) VALUES
-                ('%s', '%s')
-                """ % (
-                airline_id,
-                input_origin_airport)
+        if airline_id:
+            query = """
+                    INSERT INTO airlines_airports
+                    (airline_id, airport_id) VALUES
+                    ('%s', '%s')
+                    """ % (
+                    airline_id,
+                    input_origin_airport)
 
-        cur = mysql.connection.cursor()
-        cur.execute(query)
-        mysql.connection.commit()
+            cur = mysql.connection.cursor()
+            cur.execute(query)
+            mysql.connection.commit()
 
-        cur.close()
+            cur.close()
 
         # insert operation to populate M:M airlines_airports table with
         # airline ID, destination airport ID
-        query = """
-                INSERT INTO airlines_airports
-                (airline_id, airport_id) VALUES
-                ('%s', '%s')
-                """ % (
-                airline_id,
-                input_destination_airport)
+        if airline_id:
+            query = """
+                    INSERT INTO airlines_airports
+                    (airline_id, airport_id) VALUES
+                    ('%s', '%s')
+                    """ % (
+                    airline_id,
+                    input_destination_airport)
 
-        cur = mysql.connection.cursor()
-        cur.execute(query)
-        mysql.connection.commit()
+            cur = mysql.connection.cursor()
+            cur.execute(query)
+            mysql.connection.commit()
 
-        cur.close()
+            cur.close()
 
         return redirect('/flights')
 
@@ -629,8 +632,10 @@ def update_flight(flight_id):
         # update form
         query = """
                 SELECT planes.plane_id,
-                        REPLACE(CONCAT(planes.plane_id, ' - ', airlines.name,
-                        ' - ', planes.manufacturer), ' ', ' ') AS plane_info
+                        REPLACE(CONCAT(planes.plane_id, ' - ',
+                        COALESCE(airlines.name, 'NO AIRLINE'), ' - ',
+                        COALESCE(planes.manufacturer, 'NO MANUFACTURER')),
+                        ' ', ' ') AS plane_info
                 FROM planes
                 LEFT JOIN airlines ON planes.airline_id = airlines.airline_id
                 """

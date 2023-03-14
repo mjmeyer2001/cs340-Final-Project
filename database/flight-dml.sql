@@ -161,8 +161,10 @@ LEFT JOIN airlines
 
 -- READ: Get plane info to populate plane dropdowns.
 SELECT planes.plane_id,
-       REPLACE(CONCAT(planes.plane_id, ' - ',, airlines.name, ' - ',
-        planes.manufacturer), ' ', '') AS plane_info       
+       REPLACE(CONCAT(planes.plane_id, ' - ', 
+        COALESCE(airlines.name, 'NO AIRLINE'), ' - ',
+        COALESCE(planes.manufacturer, 'NO MANUFACTURER')
+        ), ' ', '') AS plane_info       
 FROM planes
 LEFT JOIN airlines
     ON planes.airline_id = airlines.airline_id;
