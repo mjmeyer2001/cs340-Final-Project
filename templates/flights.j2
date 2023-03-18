@@ -18,6 +18,14 @@
 
     {% include 'nav.j2' %}
 
+    <div class="container">
+        {% for message in get_flashed_messages() %}
+            <div style="text-align:center margin:auto">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+
     <div class="main-section">
         <div class="center">
             <h2 style="text-align: center">

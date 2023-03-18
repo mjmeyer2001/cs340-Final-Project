@@ -5,7 +5,7 @@
 # https://flask.palletsprojects.com/en/2.2.x/tutorial/
 
 import MySQLdb
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, flash
 from flask_mysqldb import MySQL
 from flask import request
 import os
@@ -14,6 +14,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 app = Flask(__name__)
+app.secret_key = b'_5#y2L"F4Q8z]/'
+
 
 # get config variables from .env file
 app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST')
@@ -493,6 +495,10 @@ def flights():
 
         # non-null departure time and arrival time
         if input_departure_time and input_arrival_time:
+            if(input_departure_time > input_arrival_time):
+                flash('Departure time cannot be greater than arrival time')
+                return redirect('/flights')
+
             query = """
                     INSERT INTO flights (plane_id, departure_time,
                         arrival_time,
