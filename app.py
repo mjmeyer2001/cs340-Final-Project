@@ -785,7 +785,6 @@ def update_flight(flight_id):
         result = cur.fetchone()
         airline_id = result['airline_id']
 
-        print('foo' + original_origin + input_origin_airport)
         if(original_origin != input_origin_airport):
             query = """
                     INSERT INTO airlines_airports (airline_id, airport_id) VALUES
@@ -798,8 +797,19 @@ def update_flight(flight_id):
             cur = mysql.connection.cursor()
             cur.execute(query)
             mysql.connection.commit()
+
+            query = """
+                    DELETE FROM airlines_airports WHERE airline_id = '%s' AND 
+                    airport_id = '%s' LIMIT 1
+                    """ % (
+                    airline_id,
+                    original_origin
+                    )
+            
+            cur = mysql.connection.cursor()
+            cur.execute(query)
+            mysql.connection.commit()
         
-        print('foo2' + original_destination + input_destination_airport)
         if(original_destination != input_destination_airport):
             query = """
                     INSERT INTO airlines_airports (airline_id, airport_id) VALUES
@@ -809,6 +819,18 @@ def update_flight(flight_id):
                     input_destination_airport
                     )
 
+            cur = mysql.connection.cursor()
+            cur.execute(query)
+            mysql.connection.commit()
+
+            query = """
+                    DELETE FROM airlines_airports WHERE airline_id = '%s' AND 
+                    airport_id = '%s' LIMIT 1
+                    """ % (
+                    airline_id,
+                    original_destination
+                    )
+            
             cur = mysql.connection.cursor()
             cur.execute(query)
             mysql.connection.commit()
