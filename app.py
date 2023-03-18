@@ -679,6 +679,28 @@ def update_flight(flight_id):
         if input_departure_time == 'null':
             input_departure_time = None
 
+        # read operation to get old origin airport
+        query = """
+                SELECT origin_airport_id FROM flights
+                WHERE flight_id = '%s'
+                """ % (flight_id)
+
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        result = cur.fetchone()
+        original_origin = result['origin_airport_id']
+
+        # read operation to get old destination airport
+        query = """
+                SELECT destination_airport_id FROM flights
+                WHERE flight_id = '%s'
+                """ % (flight_id)
+
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        result = cur.fetchone()
+        original_destination = result['destination_airport_id']
+
         # non-null departure time and non-null arrival time
         if input_departure_time and input_arrival_time:
             query = """UPDATE flights
@@ -751,6 +773,45 @@ def update_flight(flight_id):
         mysql.connection.commit()
 
         cur.close()
+
+        # read operation to get airline ID for a particular plane
+        query = """
+                SELECT airline_id FROM planes
+                WHERE plane_id = '%s'
+                """ % (input_plane_id)
+
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        result = cur.fetchone()
+        airline_id = result['airline_id']
+
+        print('foo' + original_origin + input_origin_airport)
+        if(original_origin != input_origin_airport):
+            query = """
+                    INSERT INTO airlines_airports (airline_id, airport_id) VALUES
+                    ('%s', '%s')
+                    """ % (
+                    airline_id,
+                    input_origin_airport
+                    )
+
+            cur = mysql.connection.cursor()
+            cur.execute(query)
+            mysql.connection.commit()
+        
+        print('foo2' + original_destination + input_destination_airport)
+        if(original_destination != input_destination_airport):
+            query = """
+                    INSERT INTO airlines_airports (airline_id, airport_id) VALUES
+                    ('%s', '%s')
+                    """ % (
+                    airline_id,
+                    input_destination_airport
+                    )
+
+            cur = mysql.connection.cursor()
+            cur.execute(query)
+            mysql.connection.commit()
 
         return redirect('/flights')
 
