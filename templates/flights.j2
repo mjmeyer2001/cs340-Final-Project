@@ -17,7 +17,8 @@
     </header>
 
     {% include 'nav.j2' %}
-
+    
+    {# following div block adapted from https://stackoverflow.com/questions/40949746/how-to-display-flashing-message-without-reloading-the-page-in-flask #}
     <div class="container">
         {% for message in get_flashed_messages() %}
             <div style="text-align:center margin:auto">
