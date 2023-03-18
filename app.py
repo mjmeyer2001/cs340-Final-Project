@@ -177,6 +177,16 @@ def airlines_airports():
 
         return redirect("/airlines_airports")
 
+@app.route('/delete_airlines_airports/<string:airline_airport_id>')
+def delete_airlines_airports(airline_airport_id):
+    query = "DELETE FROM airlines_airports WHERE airline_airport_id = '%s'" % (airline_airport_id)
+    cur = mysql.connection.cursor()
+    cur.execute(query)
+    mysql.connection.commit()
+
+    cur.close()
+
+    return redirect('/airlines_airports')
 
 @app.route('/airports', methods=['POST', 'GET'])
 def airports():
@@ -803,5 +813,5 @@ def db_error(error):
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 50260))
+    port = int(os.environ.get('PORT', 50259))
     app.run(port=port, debug=True)
